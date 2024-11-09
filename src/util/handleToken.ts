@@ -1,5 +1,10 @@
-import { authInstance } from './instance';
+'use client';
 
+import { useEffect } from 'react';
+import { authInstance } from './instance';
+import { useState } from 'react';
+
+const ACCESS_TOKEN = 'access-token';
 const REFRESH_TOKEN = 'refresh-token';
 const USER_UUID = 'user-uuid';
 
@@ -19,5 +24,24 @@ export const removeRefreshToken = () => {
 };
 
 export const setAccessToken = (token: string) => {
+  localStorage.setItem(ACCESS_TOKEN, token);
   authInstance.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 };
+
+export const removeAccessToken = () => {
+  localStorage.removeItem(ACCESS_TOKEN);
+  authInstance.defaults.headers.common['Authorization'] = null;
+};
+
+export const useIslogin = () => {
+  const [isLogin, setIsLogin] = useState<boolean | undefined>(undefined);
+
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    if (token) {
+      setIsLogin(true);
+    }
+  }, []);
+
+  return isLogin;
+}

@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import { computeCenterOfGravity } from '@/util/util';
 import { AdvancedMarker, Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 
 import { PathSet } from '@/app/types/common';

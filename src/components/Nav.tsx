@@ -19,7 +19,16 @@ export default function Nav() {
       <NavItem icon={<Gallery />} href="/gallery">
         갤러리
       </NavItem>
-      <NavItem icon={<Plus />} href="/map" circular></NavItem>
+      <Link href="/map">
+      <div
+        className={
+          "flex flex-col font-bold items-center bg-black rounded-full p-2 text-white"
+        }
+        style={{ width: "52px", height: "52px", justifyContent: "center" }}
+      >
+        <Plus />
+      </div>
+    </Link>
       <NavItem icon={<Museum />} href="/museum">
         박물관
       </NavItem>
@@ -34,27 +43,20 @@ interface NavItemProps {
   icon: ReactNode;
   children?: ReactNode;
   href: string;
-  circular?: boolean;
 }
 
-function NavItem({ href, children, icon, circular }: NavItemProps) {
+function NavItem({ href, children, icon }: NavItemProps) {
   const pathname = usePathname();
   return (
     <Link href={href}>
       <div
         className={
           "flex flex-col font-bold items-center " +
-          (pathname === href ? "text-primary-main" : "") +
-          (circular ? " bg-black rounded-full p-4 text-white" : "")
-        }
-        style={
-          circular
-            ? { width: "80px", height: "80px", justifyContent: "center" }
-            : {}
+          (pathname === href ? "text-primary-main" : "text-neutral-500")
         }
       >
         {icon}
-        {!circular && children}
+        {children}
       </div>
     </Link>
   );
