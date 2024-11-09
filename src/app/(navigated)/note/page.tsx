@@ -2,27 +2,36 @@
 import React, { useRef, useState, useEffect } from "react";
 
 export default function DrawPage() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const imageCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const drawingCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const imageCtxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const drawingCtxRef = useRef<CanvasRenderingContext2D | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [selectedColor, setSelectedColor] = useState("black");
   const [isErasing, setIsErasing] = useState(false);
+  const [lineWidth, setLineWidth] = useState(3);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        if (e.target && ctxRef.current) {
+        if (e.target && imageCtxRef.current) {
           const img = new Image();
           img.src = e.target.result as string;
           img.onload = () => {
-            ctxRef.current?.drawImage(
+            imageCtxRef.current?.clearRect(
+              0,
+              0,
+              imageCanvasRef.current!.width,
+              imageCanvasRef.current!.height
+            );
+            imageCtxRef.current?.drawImage(
               img,
               0,
               0,
-              canvasRef.current!.width,
-              canvasRef.current!.height
+              imageCanvasRef.current!.width,
+              imageCanvasRef.current!.height
             );
           };
         }
@@ -31,63 +40,105 @@ export default function DrawPage() {
     }
   };
 
-  const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const { offsetX, offsetY } = event.nativeEvent;
-    if (ctxRef.current) {
-      ctxRef.current.beginPath();
-      ctxRef.current.moveTo(offsetX, offsetY);
+  const startDrawing = (x: number, y: number) => {
+    if (drawingCtxRef.current) {
+      drawingCtxRef.current.beginPath();
+      drawingCtxRef.current.moveTo(x, y);
       setIsDrawing(true);
     }
   };
 
-  const draw = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || !ctxRef.current) return;
-    const { offsetX, offsetY } = event.nativeEvent;
-    ctxRef.current.lineTo(offsetX, offsetY);
-    ctxRef.current.stroke();
+  const draw = (x: number, y: number) => {
+    if (!isDrawing || !drawingCtxRef.current) return;
+    drawingCtxRef.current.lineTo(x, y);
+    drawingCtxRef.current.stroke();
   };
 
   const endDrawing = () => {
-    if (ctxRef.current) {
-      ctxRef.current.closePath();
+    if (drawingCtxRef.current) {
+      drawingCtxRef.current.closePath();
     }
     setIsDrawing(false);
   };
 
-  const initializeCanvas = (canvas: HTMLCanvasElement | null) => {
-    if (canvas && !ctxRef.current) {
+  const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const { offsetX, offsetY } = event.nativeEvent;
+    startDrawing(offsetX, offsetY);
+  };
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const { offsetX, offsetY } = event.nativeEvent;
+    draw(offsetX, offsetY);
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLCanvasElement>) => {
+    const touch = event.touches[0];
+    const rect = drawingCanvasRef.current?.getBoundingClientRect();
+    if (rect) {
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      startDrawing(x, y);
+    }
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLCanvasElement>) => {
+    const touch = event.touches[0];
+    const rect = drawingCanvasRef.current?.getBoundingClientRect();
+    if (rect) {
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      draw(x, y);
+    }
+    event.preventDefault(); // 터치 스크롤 방지
+  };
+
+  const initializeCanvas = (
+    canvas: HTMLCanvasElement | null,
+    contextRef: React.MutableRefObject<CanvasRenderingContext2D | null>
+  ) => {
+    if (canvas && !contextRef.current) {
       canvas.width = 800;
       canvas.height = 600;
       const ctx = canvas.getContext("2d");
       if (ctx) {
         ctx.lineCap = "round";
+        ctx.lineWidth = lineWidth;
         ctx.strokeStyle = selectedColor;
-        ctx.lineWidth = 3;
-        ctxRef.current = ctx;
+        contextRef.current = ctx;
       }
     }
   };
 
   useEffect(() => {
-    if (canvasRef.current) {
-      initializeCanvas(canvasRef.current);
+    if (imageCanvasRef.current) {
+      initializeCanvas(imageCanvasRef.current, imageCtxRef);
+    }
+    if (drawingCanvasRef.current) {
+      initializeCanvas(drawingCanvasRef.current, drawingCtxRef);
     }
   }, []);
 
   useEffect(() => {
-    if (ctxRef.current) {
-      ctxRef.current.strokeStyle = isErasing ? "white" : selectedColor;
-      ctxRef.current.lineWidth = isErasing ? 20 : 3;
+    if (drawingCtxRef.current) {
+      drawingCtxRef.current.strokeStyle = selectedColor;
+      drawingCtxRef.current.lineWidth = lineWidth;
+      drawingCtxRef.current.globalCompositeOperation = isErasing
+        ? "destination-out"
+        : "source-over";
     }
-  }, [selectedColor, isErasing]);
+  }, [selectedColor, isErasing, lineWidth]);
 
   const handleColorChange = (color: string) => {
-    setIsErasing(false); // 지우개가 선택된 경우 해제
+    setIsErasing(false);
     setSelectedColor(color);
   };
 
   const handleErase = () => {
     setIsErasing(true);
+  };
+
+  const handleLineWidthChange = (width: number) => {
+    setLineWidth(width);
   };
 
   return (
@@ -99,17 +150,27 @@ export default function DrawPage() {
         onChange={handleImageUpload}
         className="mb-4"
       />
-      <canvas
-        ref={canvasRef}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={endDrawing}
-        onMouseLeave={endDrawing}
+      <div
+        style={{ position: "relative", width: 800, height: 600 }}
         className="border border-gray-300"
-        style={{ cursor: "crosshair" }}
-      />
+      >
+        <canvas
+          ref={imageCanvasRef}
+          style={{ position: "absolute", left: 0, top: 0 }}
+        />
+        <canvas
+          ref={drawingCanvasRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={endDrawing}
+          onMouseLeave={endDrawing}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={endDrawing}
+          style={{ position: "absolute", left: 0, top: 0 }}
+        />
+      </div>
       <div className="flex space-x-2 mt-4">
-        {/* 색상 선택 버튼 */}
         {["black", "red", "orange", "yellow", "green", "blue", "purple"].map(
           (color) => (
             <button
@@ -126,7 +187,6 @@ export default function DrawPage() {
             ></button>
           )
         )}
-        {/* 지우개 버튼 */}
         <button
           onClick={handleErase}
           className={`w-8 h-8 rounded-full bg-white border ${
@@ -135,6 +195,20 @@ export default function DrawPage() {
         >
           🧽
         </button>
+      </div>
+      <div className="flex space-x-2 mt-4">
+        {[1, 3, 5, 10, 15, 20].map((width) => (
+          <button
+            key={width}
+            onClick={() => handleLineWidthChange(width)}
+            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center"
+            style={{
+              backgroundColor: lineWidth === width ? "lightgray" : "white",
+            }}
+          >
+            {width}
+          </button>
+        ))}
       </div>
     </div>
   );
