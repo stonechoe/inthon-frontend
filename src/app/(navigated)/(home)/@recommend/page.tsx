@@ -59,8 +59,7 @@ export default function Overviews() {
   const handleCardClick = () => {};
 
   return (
-    <div className="relative w-full px-4 pt-16">
-      <h1 className="text-3xl font-extrabold">런닝 크루에서<br />완성 중</h1>
+    <div className="relative">
       {/* 왼쪽 화살표 버튼 */}
       {tab > 0 && (
         <button
@@ -80,13 +79,13 @@ export default function Overviews() {
           &rarr;
         </button>
       )}
+
       <Swiper
         ref={swiper}
         pagination={true}
         modules={[Virtual, Navigation]}
         virtual={{ enabled: true }}
-        slidesPerView={1.8}
-        className="swiper-wrapper mySwiper"
+        className="mySwiper"
         onSlideChange={(sw) => setTab(sw.activeIndex)}
       >
         {slideData.map((slide) => (
@@ -103,7 +102,7 @@ export default function Overviews() {
             </div>
           </SwiperSlide>
         ))}
-        </Swiper>
+      </Swiper>
     </div>
   );
 }
