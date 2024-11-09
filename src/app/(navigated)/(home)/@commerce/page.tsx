@@ -63,6 +63,9 @@ export default function Overviews() {
 
   return (
     <div className="relative">
+      <div className="w-full px-4 mt-4">
+        <h1 className="text-3xl font-extrabold">핫 아이템</h1>
+      </div>
       {/* 왼쪽 화살표 버튼 */}
       {tab > 0 && (
         <button
