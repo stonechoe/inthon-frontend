@@ -9,7 +9,6 @@ export default function CurrentPosPage({initialCoord}: {initialCoord: Coord}) {
 
   const [coords, setCoords] = useState([
     initialCoord,
-    { lat: initialCoord.lat - 1, lng: initialCoord.lng +1},
   ]);
 
   const appendCoords = useCallback(function appendCoords(pos: GeolocationPosition) {
