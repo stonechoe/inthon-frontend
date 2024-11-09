@@ -115,7 +115,7 @@ export default function CrewPage() {
 
       {/* 크루원 목록 */}
       <div className="flex flex-wrap items-center justify-center gap-6">
-        {members.map((member) => (
+        {sampleData.map((member) => (
           <div
             key={member.identifier}
             className="w-96 bg-white shadow-lg rounded-lg p-4 flex flex-col items-center text-center"

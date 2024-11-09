@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 
 export default function MyPage() {
-  // 예시 데이터, 실제로는 API 또는 데이터베이스에서 가져올 수 있습니다.
   const userInfo = {
     name: "홍길동",
     runningRecords: [
@@ -11,6 +10,39 @@ export default function MyPage() {
       { date: "2024-02-14", distance: "10km", time: "53:12" },
       { date: "2024-03-02", distance: "3km", time: "15:50" },
     ],
+  };
+
+  const [invitations, setInvitations] = useState([
+    {
+      id: 1,
+      senderName: "김민지",
+      crewName: "러닝크루",
+      sentDate: "2024-01-12",
+      isHidden: false,
+    },
+    {
+      id: 2,
+      senderName: "정진욱",
+      crewName: "하이킹크루",
+      sentDate: "2024-02-20",
+      isHidden: false,
+    },
+  ]);
+
+  const handleAccept = (id) => {
+    setInvitations(
+      invitations.map((invitation) =>
+        invitation.id === id ? { ...invitation, isHidden: true } : invitation
+      )
+    );
+  };
+
+  const handleDecline = (id) => {
+    setInvitations(
+      invitations.map((invitation) =>
+        invitation.id === id ? { ...invitation, isHidden: true } : invitation
+      )
+    );
   };
 
   return (
