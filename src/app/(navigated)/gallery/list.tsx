@@ -1,62 +1,43 @@
-'use client';
+import React, { useState } from "react";
+import KakaoImage from "public/kakao_login_medium_narrow.png";
+import Image from "next/image";
 
-import { useRef, useState } from 'react';
-import Link from 'next/link';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import type { SwiperRef } from 'swiper/react';
-import { Virtual } from 'swiper/modules';
-import 'swiper/css';
-import Card from '@/components/Card';
-import Frame from '@/components/Frame';
+interface Drawing {
+  id: number;
+  title: string;
+  likes: number;
+  imageUrl: string;
+}
 
-export default function Overviews() {
-  const swiper = useRef<SwiperRef>(null);
-  const [tab, setTab] = useState(0);
+interface OverviewsProps {
+  drawings: Drawing[];
+}
 
-  // const handleTabChange = (index: number) => {
-  //   setTab(index);
-  //   swiper?.current?.swiper.slideTo(index);
-  // };
-
-
+function Overviews({ drawings }: OverviewsProps) {
   return (
-    <>
-    
-      {tab}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      {drawings.map((drawing) => (
+        <div key={drawing.id} className="border p-4 rounded-lg shadow-md">
+          <div className="relative w-full h-48">
+            <Image
+              src={drawing.imageUrl}
+              alt="카카오톡 로그인"
+              layout="fill" // 부모 요소를 꽉 채우도록 설정
+              objectFit="cover" // 이미지를 잘라서 채우기
+              className="rounded-md"
+            />
+          </div>
 
-      <Swiper
-        ref={swiper}
-        pagination={true}
-        modules={[Virtual]}
-        virtual={{ enabled: true }}
-        className="mySwiper"
-        onSlideChange={(sw) => setTab(sw.activeIndex)}
-      >
-        {Array.from(Array(5)).map((_, index) => (
-          <SwiperSlide key={index}>
-            <div className="px-16 pb-8 pt-8">
-              <Link href={"/TODO"}>
-                <Card />
-              </Link>
-              작품명 : 공룡
-              작가: 김지수, 김지원, 김지훈
-                <p className="text-gray-600 mt-2">
-                이 작품은 공룡을 주제로 한 창작물로, 김지수, 김지원, 김지훈 작가의 협업을 통해 탄생했습니다. 
-                공룡의 생동감 넘치는 모습을 통해 자연의 경이로움을 표현하고자 했습니다.
-              </p>
-              <div>
-                <Frame />
-                <Link href="/gallery/detail">자세히 보기</Link>
-                <button className="ml-4">
-                  공유하기
-                </button>
-              </div>
+          <div className="mt-2 text-center">
+            <h3 className="font-bold text-lg">{drawing.title}</h3>
+            <div className="flex items-center justify-center mt-2">
+              <span className="text-gray-500">💙 {drawing.likes}</span>
             </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-    </>
-
+          </div>
+        </div>
+      ))}
+    </div>
   );
-};
+}
+
+export default Overviews;
