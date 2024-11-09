@@ -20,6 +20,7 @@ export default function HomePage() {
       <Link href="/login" className="text-blue-500">
         로그인 페이지로 이동
       </Link>
+      <Link href="/drawing">드로잉?? 달리기시작</Link>
     </div>
   );
 }
