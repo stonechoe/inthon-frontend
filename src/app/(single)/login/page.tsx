@@ -4,7 +4,7 @@ import KakaoImage from "public/kakao_login_medium_narrow.png";
 import Image from "next/image";
 
 const K_REST_API_KEY = process.env.NEXT_PUBLIC_K_REST_API_KEY;
-const K_REDIRECT_URI = `http://localhost:3000`;
+const K_REDIRECT_URI = `http://localhost:3000/signup`;
 
 const Loginpage = () => {
   useEffect(() => {
