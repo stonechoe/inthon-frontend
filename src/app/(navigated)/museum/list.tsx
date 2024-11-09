@@ -31,14 +31,16 @@ function Overviews({ drawings }: OverviewsProps) {
           className="border p-4 rounded-lg shadow-md"
           onClick={() => handleGalleryClick(drawing)}
         >
-          <div className="relative w-full h-48">
-            <Image
-              src={drawing.imageUrl}
-              alt="Gallery Drawing"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-md"
-            />
+          <div className="flex justify-center items-center">
+            <div className="relative w-48 h-48 justify-center items-center">
+              <Image
+                src={drawing.imageUrl}
+                alt="Gallery Drawing"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-md"
+              />
+            </div>
           </div>
           <div className="mt-2 text-center">
             <h3 className="font-bold text-lg">{drawing.title}</h3>

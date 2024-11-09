@@ -1,5 +1,6 @@
 // pages/mypage.js
 import React from "react";
+import Link from "next/link";
 
 export default function MyPage() {
   // 예시 데이터, 실제로는 API 또는 데이터베이스에서 가져올 수 있습니다.
@@ -15,12 +16,10 @@ export default function MyPage() {
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
       <h1 className="text-3xl font-bold mb-4">마이페이지</h1>
-
       {/* 사용자 정보 */}
       <div className="mb-6">
         <p className="text-lg font-semibold">이름: {userInfo.name}</p>
       </div>
-
       {/* 달리기 기록 */}
       <div>
         <h2 className="text-2xl font-bold mb-4">달리기 기록</h2>
@@ -34,6 +33,9 @@ export default function MyPage() {
           ))}
         </ul>
       </div>
+      <Link href="/anotherpage">
+        <p className=" font-bold mb-4 mt-4 cursor-pointer">초대 수락하기</p>
+      </Link>{" "}
     </div>
   );
 }

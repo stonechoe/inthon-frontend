@@ -107,7 +107,7 @@ export default function Overviews() {
         {slideData.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div
-              className="px-16 pb-8 pt-8 flex items-center justify-center cursor-pointer"
+              className="px-8 pb-8 pt-8 flex items-center justify-center cursor-pointer"
               onClick={() => handleCardClick()}
             >
               <Card

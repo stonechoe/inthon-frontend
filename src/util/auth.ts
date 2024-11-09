@@ -1,5 +1,5 @@
-import { getRefreshToken } from './handleToken';
-import { instance } from './instance';
+import { getRefreshToken } from "./handleToken";
+import { instance } from "./instance";
 
 interface TokenType {
   user_identifier: string;
@@ -7,9 +7,9 @@ interface TokenType {
   refresh_token: string;
 }
 
-export const postLogin = async (code : string ) => {
-  const res = await instance.post('/auth', {
-    kakao_auth_token: code
+export const postLogin = async (code: string) => {
+  const res = await instance.post("/auth", {
+    kakao_auth_token: code,
   });
   const data: TokenType = res.data;
   return data;
@@ -23,3 +23,8 @@ export const postLogin = async (code : string ) => {
 //   const data: TokenType = res.data;
 //   return data;
 // };
+
+export const getCrewInvitation = async () => {
+  const res = await instance.get("/users/crew/invitation");
+  return res.data;
+};

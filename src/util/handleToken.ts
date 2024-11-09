@@ -1,15 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { authInstance } from './instance';
-import { useState } from 'react';
+import { useEffect } from "react";
+import { authInstance } from "./instance";
+import { useState } from "react";
 
-const ACCESS_TOKEN = 'access-token';
-const REFRESH_TOKEN = 'refresh-token';
-const USER_UUID = 'user-uuid';
+const ACCESS_TOKEN = "access-token";
+const REFRESH_TOKEN = "refresh-token";
+const USER_UUID = "user-uuid";
 
 export const getRefreshToken = () => {
   const value = localStorage.getItem(REFRESH_TOKEN);
+  return value;
+};
+
+export const getAccessToken = () => {
+  const value = localStorage.getItem(ACCESS_TOKEN);
   return value;
 };
 
@@ -25,12 +30,12 @@ export const removeRefreshToken = () => {
 
 export const setAccessToken = (token: string) => {
   localStorage.setItem(ACCESS_TOKEN, token);
-  authInstance.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+  authInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 };
 
 export const removeAccessToken = () => {
   localStorage.removeItem(ACCESS_TOKEN);
-  authInstance.defaults.headers.common['Authorization'] = null;
+  authInstance.defaults.headers.common["Authorization"] = null;
 };
 
 export const useIslogin = () => {
@@ -46,4 +51,4 @@ export const useIslogin = () => {
   }, []);
 
   return isLogin;
-}
+};
