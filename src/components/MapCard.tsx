@@ -36,7 +36,7 @@ export default function Card({
         <div className="text-sm text-gray-500 mb-4">{description}</div>
 
         {/* 공유하기 또는 링크 이동 버튼 */}
-        <ShareButton linkUrl={linkUrl} isShare={isShare} title={title} description={description} imagePath={imagePath} />
+        <ShareButton linkUrl={linkUrl} isShare={isShare} title={title} description={description} imagePath="/dino.png" />
         
       </div>
     </div>
