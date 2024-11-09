@@ -31,7 +31,7 @@ export default function MyPage() {
     },
   ]);
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleAccept = (id : number) => {
     setInvitations(
       invitations.map((invitation) =>
@@ -40,7 +40,7 @@ export default function MyPage() {
     );
   };
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDecline = (id : number) => {
     setInvitations(
       invitations.map((invitation) =>
