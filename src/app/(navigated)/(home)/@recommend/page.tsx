@@ -8,6 +8,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Card from "@/components/Card";
 
+import { SwiperContainer } from "swiper/element";
+
 export default function Overviews() {
   const swiper = useRef<SwiperRef>(null);
   const [tab, setTab] = useState(0);
@@ -25,7 +27,8 @@ export default function Overviews() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full px-4 pt-16">
+      <h1 className="text-3xl font-extrabold">런닝 크루에서<br />완성 중</h1>
       {/* 왼쪽 화살표 버튼 */}
       {tab > 0 && (
         <button
@@ -45,19 +48,19 @@ export default function Overviews() {
           &rarr;
         </button>
       )}
-
       <Swiper
         ref={swiper}
         pagination={true}
         modules={[Virtual, Navigation]}
         virtual={{ enabled: true }}
-        className="mySwiper"
+        slidesPerView={1.8}
+        className="swiper-wrapper mySwiper"
         onSlideChange={(sw) => setTab(sw.activeIndex)}
       >
         {Array.from(Array(5)).map((_, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} className="swiper-slide">
             <div
-              className="px-16 pb-8 pt-8 flex items-center justify-center cursor-pointer"
+              className="pr-2 pb-8 pt-8 flex items-center justify-center cursor-pointer"
               onClick={handleCardClick}
             >
               <Card
@@ -68,7 +71,7 @@ export default function Overviews() {
             </div>
           </SwiperSlide>
         ))}
-      </Swiper>
+        </Swiper>
     </div>
   );
 }

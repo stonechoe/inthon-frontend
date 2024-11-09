@@ -16,7 +16,7 @@ export default function Nav() {
     <NavItem icon={<Museum />} href="/museum">박물관</NavItem>
     <NavItem icon={<Crew />} href="/crew">크루</NavItem>
   </nav>;
-};
+};  
 
 interface NavItemProps {
   icon: ReactNode;

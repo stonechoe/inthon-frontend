@@ -11,6 +11,11 @@ async function getTodos() {
     }
     return response.json();
 }
+interface CardProps {
+  imagePath: string;
+  title: string;
+  description: string;
+}
 
 export default function HomePage() {
   const { data, error } = useQuery<CardProps[]>({
