@@ -63,7 +63,7 @@ export default function GalleryPage() {
 
   return (
     <div className="w-full m-px">
-      <h1 className="font-extrabold text-3xl text-center">실시간 인기 그림</h1>
+      <h1 className="font-extrabold text-3xl text-center">오늘의 명화들:</h1>
       <Overviews drawings={sortedDrawings} />
     </div>
   );

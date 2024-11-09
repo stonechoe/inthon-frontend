@@ -22,11 +22,13 @@ export default function Nav() {
       <Link href="/map">
       <div
         className={
-          "flex flex-col font-bold items-center bg-black rounded-full p-2 text-white"
+          "flex flex-col font-bold items-center bg-black rounded-full p-2 text-3xl text-white"
         }
         style={{ width: "52px", height: "52px", justifyContent: "center" }}
-      >
-        <Plus />
+        >
+          
+          <Plus />
+          {/* 🦶 */}
       </div>
     </Link>
       <NavItem icon={<Museum />} href="/museum">

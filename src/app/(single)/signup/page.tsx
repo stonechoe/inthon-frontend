@@ -1,7 +1,15 @@
 "use client";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { instance } from "@/util/instance";
+import { AxiosResponse } from "axios";
 
+interface SignupRes {
+  identifier: string;
+  gender: string;
+  nickname: string;
+  phone: string;
+}
 
 export default function SignupForm() {
   const router = useRouter();
@@ -20,9 +28,18 @@ export default function SignupForm() {
   
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log("닉네임:", nickname);
-    console.log("성별:", gender);
-    router.push("/");
+    instance.post('/users/signup', {
+        kakao_auth_token: code,
+        nickname,
+        gender,
+        phone,
+    }).then((res: AxiosResponse<SignupRes>) => {
+      alert('회원가입에 성공했습니다.');
+      router.push("/");
+    }).catch((err) => {
+      alert('회원가입에 실패했습니다. ' + err.status);
+
+     })
   };
 
   return (

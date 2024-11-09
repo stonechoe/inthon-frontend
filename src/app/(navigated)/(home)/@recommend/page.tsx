@@ -73,7 +73,8 @@ export default function Overviews() {
   const handleCardClick = () => {};
 
   return (
-    <div className="relative">
+    <div className="relative px-8 mt-4">
+      <h1 className="text-3xl font-extrabold">주간 인기 코스</h1>
       {/* 왼쪽 화살표 버튼 */}
       {tab > 0 && (
         <button
@@ -99,6 +100,7 @@ export default function Overviews() {
         pagination={true}
         modules={[Virtual, Navigation]}
         virtual={{ enabled: true }}
+        slidesPerView={1.4}
         className="mySwiper"
         onSlideChange={(sw) => setTab(sw.activeIndex)}
       >

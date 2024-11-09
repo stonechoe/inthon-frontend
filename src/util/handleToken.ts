@@ -40,6 +40,8 @@ export const useIslogin = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
     if (token) {
       setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
   }, []);
 

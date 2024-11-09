@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { AdvancedMarker, Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 
 import { Coord } from '@/app/types/common';
@@ -49,6 +49,10 @@ export default function PathCreateMap({ initialCoord, coords, setCoords } : Prop
           newCoods.push(e.detail.latLng);
         }
         e.stop();
+
+        if (!maps) {
+          return newCoods;
+        }
 
         const newFlightPath = new maps.Polyline({
           path: newCoods.slice(-2),

@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Drawing {
   id: number;
@@ -23,7 +24,7 @@ const handleGalleryClick = (drawing: Drawing) => {
 
 function Overviews({ drawings }: OverviewsProps) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+    <div className="flex flex-col md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
       {drawings.map((drawing) => (
         <div
           key={drawing.id}

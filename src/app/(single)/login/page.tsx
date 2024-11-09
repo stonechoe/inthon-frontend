@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import KakaoImage from "public/kakao_login_medium_narrow.png";
+import KakaoImage from "public/kakaoicon.png";
 import Image from "next/image";
 import TryLogin from "./aux/api";
 import { useSearchParams } from "next/navigation";
@@ -33,19 +33,40 @@ const Loginpage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-50 text-center px-4">
+    <div className="relative flex flex-col items-center justify-between h-full text-center p-8 overflow-hidden">
+      <div className="absolute text-[64px] rotate-45 -translate-x-1/2  -translate-y-1/2 w-96 left-1/2 top-1/2 -z-10 opacity-15">
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+        🦶🦶🏻🦶🦶🏼🦶🦶🏽🦶🦶🏾🦶🦶🏿🦶
+      </div>
+      <div />
+      <div>
       <h1 className="text-4xl font-extrabold text-gray-800 mb-6">FootPrint</h1>
-      <h2 className="text-xl font-medium text-gray-600 mb-2">
+      <h2 className="text-2xl font-medium text-gray-600 mb-2">
         당신의 발자국으로 그림을 그려보세요
-      </h2>
-      <h2 className="text-lg font-semibold text-gray-500 mb-6">
-        카카오톡으로 로그인
-      </h2>
+        </h2>
+      </div>
+
       <div
         onClick={handleKakaoLogin}
-        className="cursor-pointer transition-transform transform hover:scale-105"
+        className="cursor-pointer transition-transform place-end transform hover:scale-105 w-full p-4"
       >
-        <Image src={KakaoImage} alt="카카오톡 로그인" width={183} height={45} />
+        
+        <button className="p-4 w-full rounded-lg flex flex-row items-center justify-center gap-2" style={{ backgroundColor: 'rgb(254 229 2)' }}>
+            <Image src={KakaoImage} alt="카카오톡 아이콘" width={32} height={32} /> 카카오톡 로그인
+        </button>
       </div>
     </div>
   );

@@ -63,7 +63,7 @@ export default function Overviews() {
 
   return (
     <div className="relative">
-      <div className="w-full px-4 mt-4">
+      <div className="w-full px-8 mt-8">
         <h1 className="text-3xl font-extrabold">핫 아이템</h1>
       </div>
       {/* 왼쪽 화살표 버튼 */}
@@ -91,6 +91,7 @@ export default function Overviews() {
         pagination={true}
         modules={[Virtual, Navigation]}
         virtual={{ enabled: true }}
+        slidesPerView={1.4}
         className="mySwiper"
         onSlideChange={(sw) => setTab(sw.activeIndex)}
       >

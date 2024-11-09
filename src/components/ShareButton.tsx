@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from "react";
+import ShareIcon from 'public/icons/share.svg';
 
 declare global {
   interface Window {
@@ -75,9 +76,14 @@ export default function ShareButton({ isShare, linkUrl, title, description, imag
         e.stopPropagation(); // 카드 전체의 클릭 이벤트와 분리
         handleButtonClick();
       }}
-      className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full font-semibold hover:bg-blue-600 transition"
+      className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full font-semibold hover:bg-blue-600 transition flex flex-row items-center justify-center gap-4"
     >
+      <div className="inline">
+      <ShareIcon />
+      </div>
+      <span>
       {isShare ? "공유하기" : "링크로 이동"}
+      </span>
     </button>
   );
 }

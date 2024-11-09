@@ -36,7 +36,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="w-full px-4 mt-4">
+    <div className="w-full px-8 mt-8">
       <h1 className="text-3xl font-extrabold">오늘의 추천 코스</h1>
       <div className="px-16 pb-8 pt-8 flex items-center justify-center">
         {data?.map((card, idx) => (
@@ -49,12 +49,6 @@ export default function HomePage() {
           />
         ))}
       </div>
-      <Link href="/login" className="text-blue-500">
-        로그인 페이지로 이동
-      </Link>
-      <Link href="/drawing">드로잉 & 달리기시작</Link>
-
-      <h1 className="text-3xl font-extrabold">주간 인기 코스</h1>
     </div>
   );
 }
