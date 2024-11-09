@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-
-interface CardProps {
-  imagePath: string;
-  title: string;
-  description: string;
-}
+import type { CardProps } from "@/app/api/paths/route";
 
 export default function Card({ imagePath, title, description }: CardProps) {
   return (
