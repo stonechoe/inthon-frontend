@@ -97,8 +97,8 @@ export default function DrawPage() {
     contextRef: React.MutableRefObject<CanvasRenderingContext2D | null>
   ) => {
     if (canvas && !contextRef.current) {
-      canvas.width = 800;
-      canvas.height = 600;
+      canvas.width = 400;
+      canvas.height = 400;
       const ctx = canvas.getContext("2d");
       if (ctx) {
         ctx.lineCap = "round";
@@ -151,7 +151,7 @@ export default function DrawPage() {
         className="mb-4"
       />
       <div
-        style={{ position: "relative", width: 800, height: 600 }}
+        style={{ position: "relative", width: 400, height: 400 }}
         className="border border-gray-300"
       >
         <canvas
@@ -170,7 +170,9 @@ export default function DrawPage() {
           style={{ position: "absolute", left: 0, top: 0 }}
         />
       </div>
-      <div className="flex space-x-2 mt-4">
+      <div className="flex items-center space-x-2 mt-4">
+        <span className="font-semibold">색깔:</span>
+
         {["black", "red", "orange", "yellow", "green", "blue", "purple"].map(
           (color) => (
             <button
@@ -196,7 +198,9 @@ export default function DrawPage() {
           🧽
         </button>
       </div>
-      <div className="flex space-x-2 mt-4">
+      <div className="flex items-center space-x-2 mt-4">
+        <span className="font-semibold">굵기:</span>
+
         {[1, 3, 5, 10, 15, 20].map((width) => (
           <button
             key={width}
