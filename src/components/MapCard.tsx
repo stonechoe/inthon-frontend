@@ -7,14 +7,14 @@ import type { PathSet } from "@/app/types/common";
 import ShareButton from "./ShareButton";
 
 interface EnhancedCardProps extends CardProps {
-  pathset: PathSet;
+  pathsets: PathSet[];
   isShare?: boolean;
   linkUrl?: string;
   onClick?: () => void;
 }
 
 export default function Card({
-  pathset,
+  pathsets,
   title,
   description,
   isShare = true,
@@ -29,7 +29,7 @@ export default function Card({
       className="rounded-lg border border-primary-200 w-full max-w-xs cursor-pointer"
     >
       <div className="w-full h-64 bg-gray-200 rounded-t-lg overflow-hidden relative">
-        <MyMap ps={pathset} />
+        <MyMap ps={pathsets} />
       </div>
       <div className="p-4">
         <div className="font-bold">{title}</div>
