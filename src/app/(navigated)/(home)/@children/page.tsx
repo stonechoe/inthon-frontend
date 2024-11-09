@@ -1,6 +1,5 @@
 // HomePage.tsx
 "use client";
-import Link from "next/link";
 import Card from "@/components/Card";
 import { useQuery } from "@tanstack/react-query";
 
@@ -21,7 +20,7 @@ interface CardProps {
 }
 
 export default function HomePage() {
-  const { data, error } = useQuery<CardProps[]>({
+  const { data } = useQuery<CardProps[]>({
     queryKey: ["todos"],
     queryFn: getTodos,
   });

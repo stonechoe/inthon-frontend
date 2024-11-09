@@ -29,12 +29,11 @@ export default function TryLogin({ code }: { code: string }) {
     }).catch(() => {
       {
         alert('가짜 로그인합니다');
-        setAccessToken(`API_RESPONSE (여길 고쳐)`);
+        setAccessToken(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcl9pZGVudGlmaWVyIjoiMWJmYjllOTItM2NmZS00OTMwLWIyOTctOTFhNWFmMGJhMDQ3In0sImV4cCI6MTczMTI1NDIwMX0.KZdKGMq1jslDkkIcnVwaCNPciXYvbROJ99CslzuQa54`);
         setRefreshToken('', '');
 
         route.push('/');
       }
-      // route.push(`/signup?code=${code}`);
     });
 
     // try login

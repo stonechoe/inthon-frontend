@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
+
 
 interface CrewMember {
   identifier: string,
@@ -37,9 +36,9 @@ const sampleData : CrewMember[] = [
   },
 ];
 
-async function fetchCrewMembers() : Promise<CrewMember[]> {
-  return sampleData;
-}
+// async function fetchCrewMembers() : Promise<CrewMember[]> {
+  // return sampleData;
+// }
 
 
 export default function CrewPage() {
@@ -51,6 +50,7 @@ export default function CrewPage() {
     phone: "",
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setNewMember({ ...newMember, [name]: value });
@@ -61,10 +61,10 @@ export default function CrewPage() {
       setMembers([
         ...members,
         {
-          identifier: members.length + 1,
+          identifier: String(members.length + 1),
           nickname: newMember.nickname,
           gender: newMember.gender,
-          phone: newMember.phone,
+          // phone: newMember.phone,
         },
       ]);
       setNewMember({ nickname: "", gender: "", phone: "" }); // 입력 후 초기화
@@ -73,9 +73,9 @@ export default function CrewPage() {
     }
   };
 
-  if (!data) {
-    return <div>로딩중...</div>;
-  }
+  // if (!data) {
+  //   return <div>로딩중...</div>;
+  // }
 
   return (
     <div className="w-full p-4">
@@ -115,7 +115,7 @@ export default function CrewPage() {
 
       {/* 크루원 목록 */}
       <div className="flex flex-wrap items-center justify-center gap-6">
-        {data.map((member) => (
+        {members.map((member) => (
           <div
             key={member.identifier}
             className="w-96 bg-white shadow-lg rounded-lg p-4 flex flex-col items-center text-center"
@@ -126,7 +126,7 @@ export default function CrewPage() {
             <p className="text-gray-700">
               성별: {member.gender === "male" ? "남성" : "여성"}
             </p>
-            <p className="text-gray-500">전화번호: {member.phone}</p>
+            {/* <p className="text-gray-500">전화번호: {member.phone}</p> */}
           </div>
         ))}
       </div>

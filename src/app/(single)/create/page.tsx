@@ -37,11 +37,11 @@ function SubPage({initialCoord} : {initialCoord: Coord}) {
         const chunk = sequenced.slice(i, i + 900);
         authInstance.post(`/paths/${res.data.identifier}/coordinates`, { coordinates: chunk }).then(() => {
           alert("좌표 생성 요청 성공");
-        }).catch((err) => {
+        }).catch(() => {
           alert("좌표 생성 요청 실패");
         });
       }
-    }).catch((err) => {
+    }).catch(() => {
       alert("생성 요청 실패");
     });
   }, [coords]);
