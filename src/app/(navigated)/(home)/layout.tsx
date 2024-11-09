@@ -7,7 +7,7 @@ interface Props {
 
 export default function HomeLayout({ children, recommend }: Props) {
   return (<div className="w-full">
-    {recommend}
     {children}
+    {recommend}
   </div>);
 }
