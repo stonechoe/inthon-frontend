@@ -13,6 +13,11 @@ export const getRefreshToken = () => {
   return value;
 };
 
+export const getAccessToken = () => {
+  const value = localStorage.getItem(ACCESS_TOKEN);
+  return value;
+};
+
 export const setRefreshToken = async (value: string, uuid: string) => {
   localStorage.setItem(REFRESH_TOKEN, value);
   localStorage.setItem(USER_UUID, uuid);

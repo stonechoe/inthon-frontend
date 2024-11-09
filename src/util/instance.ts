@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 // import { postRefreshToken } from './auth';
-// import { setAccessToken, setRefreshToken } from './handleToken';
+import { getAccessToken } from './handleToken';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -12,6 +12,16 @@ export const instance = axios.create({
 export const authInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 20000,
+});
+
+authInstance.interceptors.request.use((config) => {
+
+  const accessToken = getAccessToken();
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  return config;
 });
 
 authInstance.interceptors.response.use(

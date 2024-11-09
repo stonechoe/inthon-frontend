@@ -28,12 +28,12 @@ export default function SignupForm() {
   
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    instance.post('/users/signup', {
+    instance.post('/users', {
         kakao_auth_token: code,
         nickname,
         gender,
         phone,
-    }).then((res: AxiosResponse<SignupRes>) => {
+    }).then((/* res: AxiosResponse<SignupRes> */) => {
       alert('회원가입에 성공했습니다.');
       router.push("/");
     }).catch((err) => {

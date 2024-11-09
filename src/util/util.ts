@@ -1,14 +1,17 @@
+import { Coord } from "@/app/types/common";
+
 interface LangLat {
   lat: number;
   lng: number;
 }
 
-export function computeCenterOfGravity(points: LangLat[]): LangLat {
-
 // Convert degrees to radians
 function toRadians(deg: number) {
   return (deg * Math.PI) / 180;
 }
+
+export function computeCenterOfGravity(points: LangLat[]): LangLat {
+
 
 // Convert radians to degrees
 function toDegrees(rad : number) {
@@ -45,4 +48,20 @@ const hyp = Math.sqrt(avgX * avgX + avgY * avgY);
 const avgLat = toDegrees(Math.atan2(avgZ, hyp));
   const avgLng = toDegrees(Math.atan2(avgY, avgX));
   return { lat: avgLat, lng: avgLng };
+}
+
+export function meterDistance(c1: Coord, c2: Coord) {
+  const R = 6371e3; // metres
+  const φ1 = toRadians(c1.lat);
+  const φ2 = toRadians(c2.lat);
+  const Δφ = toRadians(c2.lat - c1.lat);
+  const Δλ = toRadians(c2.lng - c1.lng);
+
+  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c;
 }
