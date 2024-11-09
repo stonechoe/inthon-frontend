@@ -15,7 +15,7 @@ export default function AbstractPage() {
       <h1 className="text-2xl font-bold text-center mb-6">{title}</h1>
 
       {/* 경로 이미지 */}
-      <div className="relative w-full h-64 mb-6 flex justify-center items-center bg-gray-100 rounded-lg overflow-hidden">
+      <div className="relative w-[300px] h-[300px] mb-6 flex justify-center items-center bg-gray-100 rounded-lg overflow-hidden mx-auto">
         {imageUrl && (
           <Image
             src={imageUrl as string}

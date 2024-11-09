@@ -14,6 +14,7 @@ const KAKAO_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_APP_KEY;
 interface EnhancedCardProps extends CardProps {
   isShare?: boolean;
   linkUrl?: string;
+  onClick?: () => void;
 }
 
 export default function Card({
@@ -22,6 +23,7 @@ export default function Card({
   description,
   isShare = true,
   linkUrl = "/",
+  onClick,
 }: EnhancedCardProps) {
   useEffect(() => {
     // 카카오 SDK 초기화
@@ -30,7 +32,7 @@ export default function Card({
     }
   }, []);
 
-  const handleShareClick = () => {
+  const handleButtonClick = () => {
     if (isShare) {
       if (window.Kakao) {
         window.Kakao.Share.sendDefault({
@@ -77,7 +79,10 @@ export default function Card({
   };
 
   return (
-    <div className="rounded-lg border border-primary-200 w-full max-w-xs">
+    <div
+      onClick={onClick} // 카드 전체에 onClick 적용
+      className="rounded-lg border border-primary-200 w-full max-w-xs cursor-pointer"
+    >
       <div className="w-full h-64 bg-gray-200 rounded-t-lg overflow-hidden relative">
         <Image
           src={imagePath}
@@ -92,7 +97,10 @@ export default function Card({
 
         {/* 공유하기 또는 링크 이동 버튼 */}
         <button
-          onClick={handleShareClick}
+          onClick={(e) => {
+            e.stopPropagation(); // 카드 전체의 클릭 이벤트와 분리
+            handleButtonClick();
+          }}
           className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full font-semibold hover:bg-blue-600 transition"
         >
           {isShare ? "공유하기" : "링크로 이동"}

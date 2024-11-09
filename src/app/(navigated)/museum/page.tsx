@@ -8,7 +8,7 @@ const sampleData = [
     id: 1,
     imageUrl: "/dog.png",
     title: "초원의 자유로운 친구",
-    likes: 120,
+    likes: 122,
     description:
       "푸른 초원 위를 자유롭게 달리는 강아지의 모습이 자연과 조화를 이룬 장면입니다.",
   },
@@ -16,7 +16,7 @@ const sampleData = [
     id: 2,
     imageUrl: "/dino.png",
     title: "공룡의 위엄",
-    likes: 85,
+    likes: 87,
     description:
       "초원의 한가운데에 서 있는 공룡의 장엄한 모습이 고대의 웅장함을 떠올리게 합니다.",
   },
@@ -24,7 +24,7 @@ const sampleData = [
     id: 3,
     imageUrl: "/frog.png",
     title: "연못의 작은 철학자",
-    likes: 200,
+    likes: 203,
     description:
       "연못가에 앉아있는 개구리의 유쾌한 표정이 평화로운 자연의 한 순간을 포착하고 있습니다.",
   },

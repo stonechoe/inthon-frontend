@@ -42,7 +42,9 @@ function Overviews({ drawings }: OverviewsProps) {
           <div className="mt-2 text-center">
             <h3 className="font-bold text-lg">{drawing.title}</h3>
             <div className="flex items-center justify-center mt-2">
-              <span className="text-gray-500">💙 {drawing.likes}</span>
+              <span className="text-gray-500">
+                좋아요 수 : 💙 {drawing.likes}
+              </span>
             </div>
           </div>
         </div>

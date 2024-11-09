@@ -1,5 +1,5 @@
+// HomePage.tsx
 "use client";
-
 import Link from "next/link";
 import Card from "@/components/Card";
 import { useQuery } from "@tanstack/react-query";
@@ -11,10 +11,13 @@ async function getTodos() {
   }
   return response.json();
 }
+
 interface CardProps {
+  id: number;
   imagePath: string;
   title: string;
   description: string;
+  likes: number;
 }
 
 export default function HomePage() {
@@ -23,17 +26,26 @@ export default function HomePage() {
     queryFn: getTodos,
   });
 
+  // 클릭 시 abstract 페이지로 이동
+  const handleGalleryClick = (card: CardProps) => {
+    const { id, imagePath, title, likes, description } = card;
+
+    window.location.href = `/abstract?id=${id}&imageUrl=${imagePath}&title=${encodeURIComponent(
+      title
+    )}&likes=${likes}&description=${encodeURIComponent(description)}`;
+  };
+
   return (
     <div className="w-full px-4 mt-4">
       <h1 className="text-3xl font-extrabold">오늘의 추천 코스</h1>
-      <div className="px-16 pb-8 pt-8 flex items-center justify-center ">
-        {error && <div>에러가 발생했습니다</div>}
-        {data?.map((card, index) => (
+      <div className="px-16 pb-8 pt-8 flex items-center justify-center">
+        {data?.map((card, idx) => (
           <Card
-            key={index}
+            key={idx}
             imagePath={card.imagePath}
             title={card.title}
             description={card.description}
+            onClick={() => handleGalleryClick(card)}
           />
         ))}
       </div>

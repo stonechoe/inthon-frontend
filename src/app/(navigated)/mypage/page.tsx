@@ -5,7 +5,6 @@ export default function MyPage() {
   // 예시 데이터, 실제로는 API 또는 데이터베이스에서 가져올 수 있습니다.
   const userInfo = {
     name: "홍길동",
-    age: 25,
     runningRecords: [
       { date: "2024-01-10", distance: "5km", time: "25:34" },
       { date: "2024-02-14", distance: "10km", time: "53:12" },
@@ -20,7 +19,6 @@ export default function MyPage() {
       {/* 사용자 정보 */}
       <div className="mb-6">
         <p className="text-lg font-semibold">이름: {userInfo.name}</p>
-        <p className="text-lg font-semibold">나이: {userInfo.age}세</p>
       </div>
 
       {/* 달리기 기록 */}

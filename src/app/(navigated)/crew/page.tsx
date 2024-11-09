@@ -48,9 +48,46 @@ export default function CrewPage() {
     fetchData();
   }, []);
 
+  const [newMember, setNewMember] = useState({
+    nickname: "",
+    gender: "",
+    phone: "",
+  });
+  const handleInputChange = (e: { target: { name: any; value: any } }) => {
+    const { name, value } = e.target;
+    setNewMember({ ...newMember, [name]: value });
+  };
+
+  const handleAddMember = () => {
+    if (newMember.nickname && newMember.gender && newMember.phone) {
+      setMembers([
+        ...members,
+        {
+          identifier: members.length + 1,
+          nickname: newMember.nickname,
+          gender: newMember.gender,
+          phone: newMember.phone,
+        },
+      ]);
+      setNewMember({ nickname: "", gender: "", phone: "" }); // 입력 후 초기화
+    } else {
+      alert("모든 정보를 입력해주세요!");
+    }
+  };
+
   return (
     <div className="w-full p-4">
       <h1 className="font-extrabold text-3xl text-center mb-6">크루원 정보</h1>
+      <div className="m-10">
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // 카드 전체의 클릭 이벤트와 분리
+          }}
+          className="bg-blue-500 text-white px-8 py-4 rounded-lg w-full font-semibold hover:bg-blue-600 transition"
+        >
+          크루원 추가
+        </button>
+      </div>
       <div className="flex flex-wrap items-center justify-center gap-6">
         {members.map((member) => (
           <div
