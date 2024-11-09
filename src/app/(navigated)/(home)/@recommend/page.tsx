@@ -7,60 +7,39 @@ import { Virtual, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import Card from "@/components/Card";
+import { authInstance } from "@/util/instance";
+import { useQuery } from "@tanstack/react-query";
 
 interface CardProps {
-  id: number;
-  imageUrl: string;
-  title: string;
-  description: string;
-  likes: number;
+  identifier: string;
+  name: string;
+  total_distance: number;
+  estimated_required_minute: number;
+  creator_identifier: string;
+  created_date: string;
+  last_modified_date: string;
 }
-const handleGalleryClick = (card: CardProps) => {
-  const { id, imageUrl, title, likes, description } = card;
 
-  window.location.href = `/abstract?id=${id}&imageUrl=${imageUrl}&title=${encodeURIComponent(
-    title
-  )}&likes=${likes}&description=${encodeURIComponent(description)}`;
-};
-const slideData = [
-  {
-    id: 1,
-    imageUrl: "/dino.png",
-    title: "공룡의 위엄",
-    likes: 85,
-    description:
-      "초원의 한가운데에 서 있는 공룡의 장엄한 모습이 고대의 웅장함을 떠올리게 합니다.",
-  },
-  {
-    id: 2,
-    imageUrl: "/dog.png",
-    title: "초원의 자유로운 친구",
-    likes: 120,
-    description:
-      "푸른 초원 위를 자유롭게 달리는 강아지의 모습이 자연과 조화를 이룬 장면입니다.",
-  },
+async function fetchAllPaths() {
+  return await authInstance.get("/paths").then((res) => res.data) as CardProps[];
+}
 
-  {
-    id: 3,
-    imageUrl: "/frog.png",
-    title: "연못의 작은 철학자",
-    likes: 200,
-    description:
-      "연못가에 앉아있는 개구리의 유쾌한 표정이 평화로운 자연의 한 순간을 포착하고 있습니다.",
-  },
-  {
-    id: 4,
-    imageUrl: "/dog.png",
-    title: "햇살 아래의 행복",
-    likes: 150,
-    description:
-      "잔디밭에서 기쁨을 만끽하는 강아지의 모습이 따스한 햇살과 어우러진 장면입니다.",
-  },
-];
+// const handleGalleryClick = (card: CardProps) => {
+//   const { id, imageUrl, title, likes, description } = card;
+
+//   window.location.href = `/abstract?id=${id}&imageUrl=${imageUrl}&title=${encodeURIComponent(
+//     title
+//   )}&likes=${likes}&description=${encodeURIComponent(description)}`;
+// };
+
 
 export default function Overviews() {
   const swiper = useRef<SwiperRef>(null);
   const [tab, setTab] = useState(0);
+  const { data } = useQuery({
+    queryKey: ["allpath"],
+    queryFn: fetchAllPaths
+  });
 
   const handleNextSlide = () => {
     swiper.current?.swiper.slideNext();
@@ -70,7 +49,11 @@ export default function Overviews() {
     swiper.current?.swiper.slidePrev();
   };
 
-  const handleCardClick = () => {};
+  const handleCardClick = () => { };
+  
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="relative px-8 mt-4">
@@ -86,7 +69,7 @@ export default function Overviews() {
       )}
 
       {/* 오른쪽 화살표 버튼 */}
-      {tab < slideData.length - 1 && (
+      {tab < data.length - 1 && (
         <button
           onClick={handleNextSlide}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg"
@@ -104,17 +87,17 @@ export default function Overviews() {
         className="mySwiper"
         onSlideChange={(sw) => setTab(sw.activeIndex)}
       >
-        {slideData.map((slide) => (
-          <SwiperSlide key={slide.id}>
+        {data.map((slide, idx) => (
+          <SwiperSlide key={idx}>
             <div
               className="px-8 pb-8 pt-8 flex items-center justify-center cursor-pointer"
               onClick={() => handleCardClick()}
             >
               <Card
-                imagePath={slide.imageUrl}
-                title={slide.title}
-                description={slide.description}
-                onClick={() => handleGalleryClick(slide)}
+                imagePath='/images/adidas.jpeg'
+                title='title'
+                description='description'
+                // onClick={() => handleGalleryClick(slide)}
               />
             </div>
           </SwiperSlide>

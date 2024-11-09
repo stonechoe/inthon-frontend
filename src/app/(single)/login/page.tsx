@@ -8,7 +8,8 @@ import { useSearchParams } from "next/navigation";
 const K_REST_API_KEY = process.env.NEXT_PUBLIC_K_REST_API_KEY;
 const K_REDIRECT_URI = `http://localhost:3000/login`;
 
-const Loginpage = () => {
+export default function Loginpage() {
+
   const sp = useSearchParams();
   const code = sp.get("code");
 
@@ -71,5 +72,3 @@ const Loginpage = () => {
     </div>
   );
 };
-
-export default Loginpage;

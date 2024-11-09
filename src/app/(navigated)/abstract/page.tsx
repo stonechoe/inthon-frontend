@@ -4,10 +4,10 @@ import Image from "next/image";
 
 export default function AbstractPage() {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  // const id = searchParams.get("id");
   const imageUrl = searchParams.get("imageUrl");
   const title = searchParams.get("title");
-  const likes = searchParams.get("likes");
+  // const likes = searchParams.get("likes");
   const description = searchParams.get("description");
 
   return (

@@ -35,7 +35,7 @@ export default function MyMap({ ps } : { ps : PathSet[] }) {
   return (<div className='h-full w-full relative'>
     <Map
       defaultZoom={20}
-      center={lastCoord}
+      defaultCenter={lastCoord}
       disableDefaultUI
       mapId="DEMO_MAP_ID"
       //  Map ID is required for advanced markers. 

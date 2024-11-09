@@ -1,15 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { instance } from "@/util/instance";
-import { AxiosResponse } from "axios";
 
-interface SignupRes {
-  identifier: string;
-  gender: string;
-  nickname: string;
-  phone: string;
-}
+// interface SignupRes {
+//   identifier: string;
+//   gender: string;
+//   nickname: string;
+//   phone: string;
+// }
 
 export default function SignupForm() {
   const router = useRouter();
@@ -28,12 +27,12 @@ export default function SignupForm() {
   
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    instance.post('/users/signup', {
+    instance.post('/users', {
         kakao_auth_token: code,
         nickname,
         gender,
         phone,
-    }).then((res: AxiosResponse<SignupRes>) => {
+    }).then((/* res: AxiosResponse<SignupRes> */) => {
       alert('회원가입에 성공했습니다.');
       router.push("/");
     }).catch((err) => {
@@ -42,7 +41,7 @@ export default function SignupForm() {
      })
   };
 
-  return (
+  return (<Suspense>
     <div className="w-full max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-2xl font-bold text-center mb-6">가짜 회원가입</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -124,6 +123,6 @@ export default function SignupForm() {
           가입하기
         </button>
       </form>
-    </div>
+    </div></Suspense>
   );
 }

@@ -54,6 +54,7 @@ const MOCKING_REVIEWS = [
 const fakeReviews: CardProps[] = MOCKING_REVIEWS.map((content) => ({
   title: "...",
   description: content,
+  imagePath: "/dino.png",
 }));
 
 // TODO use real api

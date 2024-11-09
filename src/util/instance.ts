@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
 // import { postRefreshToken } from './auth';
 import { getAccessToken } from "./handleToken";
-
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const instance = axios.create({
@@ -30,7 +29,7 @@ authInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    try {
+    // try {
       // const config = error.config;
       // const newTokens = await postRefreshToken();
 
@@ -43,12 +42,12 @@ authInstance.interceptors.response.use(
       // });
       return Promise.reject(error);
       // return await Promise.resolve(response);
-    } catch (e) {
+    // } catch () {
       // const error = e as AxiosError;
       // if (error.status === 401) {
       //   window.location.href = '/login';
       // }
       // console.error(error);
-    }
+    // }
   }
 );
