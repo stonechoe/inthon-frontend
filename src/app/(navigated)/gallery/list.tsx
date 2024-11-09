@@ -12,16 +12,22 @@ interface Drawing {
 interface OverviewsProps {
   drawings: Drawing[];
 }
+const handleGalleryClick = () => {
+  window.location.href = "/abstract"; // 페이지 이동
+};
 
 function Overviews({ drawings }: OverviewsProps) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+    <div
+      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4"
+      onClick={handleGalleryClick}
+    >
       {drawings.map((drawing) => (
         <div key={drawing.id} className="border p-4 rounded-lg shadow-md">
           <div className="relative w-full h-48">
             <Image
               src={drawing.imageUrl}
-              alt="카카오톡 로그인"
+              alt="갤러리 그림"
               layout="fill" // 부모 요소를 꽉 채우도록 설정
               objectFit="cover" // 이미지를 잘라서 채우기
               className="rounded-md"
