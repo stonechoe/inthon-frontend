@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from 'react';
 import { Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';

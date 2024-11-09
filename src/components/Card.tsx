@@ -1,9 +1,28 @@
-export default function Card() {
-  return <div className="rounded-lg shadow-lg w-full">
-    <div className="h-48 bg-gray-200 rounded-t-lg"></div>
-    <div className="p-4">
-      <div className="font-bold">코스 이름</div>
-      <div className="text-sm text-gray-500">코스 설명</div>
+"use client";
+import React from "react";
+import Image from "next/image";
+
+interface CardProps {
+  imagePath: string;
+  title: string;
+  description: string;
+}
+
+export default function Card({ imagePath, title, description }: CardProps) {
+  return (
+    <div className="rounded-lg shadow-lg w-full max-w-xs">
+      <div className="w-full h-64 bg-gray-200 rounded-t-lg overflow-hidden relative">
+        <Image
+          src={imagePath}
+          alt="Card image"
+          fill
+          style={{ objectFit: "cover" }}
+        />
+      </div>
+      <div className="p-4">
+        <div className="font-bold">{title}</div>
+        <div className="text-sm text-gray-500">{description}</div>
+      </div>
     </div>
-  </div>
+  );
 }
