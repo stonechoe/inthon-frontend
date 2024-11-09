@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { instance } from "@/util/instance";
 import { setAccessToken, setRefreshToken } from "@/util/handleToken";
+import { AxiosResponse } from "axios";
 
 type UUID = string;
 
@@ -20,21 +21,20 @@ export default function TryLogin({ code }: { code: string }) {
   useEffect(() => {
 
     instance.post('/users/login', {
-      body: {
         kakao_auth_token: code
       }
-    }).then((res) => {
+    ).then((res: AxiosResponse<LoginResponse>) => {
       setAccessToken(res.data.access_token);
-      setRefreshToken(res.data.refresh_token, res.data.user_identifier);
+      setRefreshToken(res.data.refresh_token || '', res.data.user_identifier);
     }).catch(() => {
+      {
+        alert('가짜 로그인합니다');
+        setAccessToken(`API_RESPONSE (여길 고쳐)`);
+        setRefreshToken('', '');
 
-      { // login mock
-        alert('(지금은 백엔드가 없어서 당연히 로그인에 실패했지만) 테스트 중이니 로그인했다고 치겠습니다')
-        setAccessToken('any');
-        setRefreshToken('any', 'anyuuid');
+        route.push('/');
       }
-
-      route.push(`/signup?code=${code}`);
+      // route.push(`/signup?code=${code}`);
     });
 
     // try login

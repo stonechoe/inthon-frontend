@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
 // import { postRefreshToken } from './auth';
 import { getAccessToken } from "./handleToken";
-
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const instance = axios.create({
