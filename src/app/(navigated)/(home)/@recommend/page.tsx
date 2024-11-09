@@ -8,7 +8,41 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Card from "@/components/Card";
 
-import { SwiperContainer } from "swiper/element";
+const slideData = [
+  {
+    id: 1,
+    imageUrl: "/dino.png",
+    title: "공룡의 위엄",
+    likes: 85,
+    description:
+      "초원의 한가운데에 서 있는 공룡의 장엄한 모습이 고대의 웅장함을 떠올리게 합니다.",
+  },
+  {
+    id: 2,
+    imageUrl: "/dog.png",
+    title: "초원의 자유로운 친구",
+    likes: 120,
+    description:
+      "푸른 초원 위를 자유롭게 달리는 강아지의 모습이 자연과 조화를 이룬 장면입니다.",
+  },
+
+  {
+    id: 3,
+    imageUrl: "/frog.png",
+    title: "연못의 작은 철학자",
+    likes: 200,
+    description:
+      "연못가에 앉아있는 개구리의 유쾌한 표정이 평화로운 자연의 한 순간을 포착하고 있습니다.",
+  },
+  {
+    id: 4,
+    imageUrl: "/dog.png",
+    title: "햇살 아래의 행복",
+    likes: 150,
+    description:
+      "잔디밭에서 기쁨을 만끽하는 강아지의 모습이 따스한 햇살과 어우러진 장면입니다.",
+  },
+];
 
 export default function Overviews() {
   const swiper = useRef<SwiperRef>(null);
@@ -22,9 +56,7 @@ export default function Overviews() {
     swiper.current?.swiper.slidePrev();
   };
 
-  const handleCardClick = () => {
-    window.location.href = "/TODO"; // 페이지 이동
-  };
+  const handleCardClick = () => {};
 
   return (
     <div className="relative w-full px-4 pt-16">
@@ -40,7 +72,7 @@ export default function Overviews() {
       )}
 
       {/* 오른쪽 화살표 버튼 */}
-      {tab < 4 && (
+      {tab < slideData.length - 1 && (
         <button
           onClick={handleNextSlide}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg"
@@ -57,16 +89,16 @@ export default function Overviews() {
         className="swiper-wrapper mySwiper"
         onSlideChange={(sw) => setTab(sw.activeIndex)}
       >
-        {Array.from(Array(5)).map((_, index) => (
-          <SwiperSlide key={index} className="swiper-slide">
+        {slideData.map((slide) => (
+          <SwiperSlide key={slide.id}>
             <div
-              className="pr-2 pb-8 pt-8 flex items-center justify-center cursor-pointer"
-              onClick={handleCardClick}
+              className="px-16 pb-8 pt-8 flex items-center justify-center cursor-pointer"
+              onClick={() => handleCardClick()}
             >
               <Card
-                imagePath="/dog.png"
-                title="댕댕이 코스"
-                description="강아지 모양 코스를 달려보세요"
+                imagePath={slide.imageUrl}
+                title={slide.title}
+                description={slide.description}
               />
             </div>
           </SwiperSlide>

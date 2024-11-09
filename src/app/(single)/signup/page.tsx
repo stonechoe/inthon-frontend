@@ -10,11 +10,14 @@ export default function SignupForm() {
 
   const [nickname, setNickname] = useState("");
   const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
+
+
 
   if (!code) {
     return <div>로그인 실패 - 카카오 로그인으로 시도하세요</div>;
   }
-
+  
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log("닉네임:", nickname);
@@ -74,6 +77,26 @@ export default function SignupForm() {
               여성
             </label>
           </div>
+        </div>
+
+        {/* 전화번호 입력 */}
+        {/* 닉네임 입력 */}
+        <div>
+          <label
+            className="block text-gray-700 font-semibold mb-2"
+            htmlFor="phone"
+          >
+            전화번호
+          </label>
+          <input
+            type="text"
+            id="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="전화번호를 입력하세요"
+            required
+          />
         </div>
 
         {/* 제출 버튼 */}

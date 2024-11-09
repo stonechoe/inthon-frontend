@@ -16,7 +16,6 @@ interface OverviewsProps {
 const handleGalleryClick = (drawing: Drawing) => {
   const { id, imageUrl, title, likes, description } = drawing;
 
-  // Pass values via query parameters (imageUrl passed as is)
   window.location.href = `/abstract?id=${id}&imageUrl=${imageUrl}&title=${encodeURIComponent(
     title
   )}&likes=${likes}&description=${description}`;
