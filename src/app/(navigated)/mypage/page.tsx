@@ -1,5 +1,7 @@
+'use client';
+
 // pages/mypage.js
-import React from "react";
+import React, {useState} from "react";
 import Link from "next/link";
 
 export default function MyPage() {
@@ -29,7 +31,8 @@ export default function MyPage() {
     },
   ]);
 
-  const handleAccept = (id) => {
+  
+  const handleAccept = (id : number) => {
     setInvitations(
       invitations.map((invitation) =>
         invitation.id === id ? { ...invitation, isHidden: true } : invitation
@@ -37,7 +40,7 @@ export default function MyPage() {
     );
   };
 
-  const handleDecline = (id) => {
+  const handleDecline = (id : number) => {
     setInvitations(
       invitations.map((invitation) =>
         invitation.id === id ? { ...invitation, isHidden: true } : invitation
@@ -47,6 +50,7 @@ export default function MyPage() {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <Link href="/logout">로그아웃</Link>
       <h1 className="text-3xl font-bold mb-4">마이페이지</h1>
       {/* 사용자 정보 */}
       <div className="mb-6">
