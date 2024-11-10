@@ -1,7 +1,10 @@
 "use client";
+
 import React, { useRef, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function DrawPage() {
+  const router = useRouter();
   const imageCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const drawingCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageCtxRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -11,34 +14,32 @@ export default function DrawPage() {
   const [isErasing, setIsErasing] = useState(false);
   const [lineWidth, setLineWidth] = useState(3);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target && imageCtxRef.current) {
-          const img = new Image();
-          img.src = e.target.result as string;
-          img.onload = () => {
-            imageCtxRef.current?.clearRect(
-              0,
-              0,
-              imageCanvasRef.current!.width,
-              imageCanvasRef.current!.height
-            );
-            imageCtxRef.current?.drawImage(
-              img,
-              0,
-              0,
-              imageCanvasRef.current!.width,
-              imageCanvasRef.current!.height
-            );
-          };
+  useEffect(() => {
+    if (!router.isReady) return;
+    const { imageUrl } = router.query; // 이전 페이지에서 전달된 imageUrl
+
+    if (imageUrl && typeof imageUrl === "string") {
+      const img = new Image();
+      img.src = imageUrl;
+      img.onload = () => {
+        if (imageCtxRef.current) {
+          imageCtxRef.current.clearRect(
+            0,
+            0,
+            imageCanvasRef.current!.width,
+            imageCanvasRef.current!.height
+          );
+          imageCtxRef.current.drawImage(
+            img,
+            0,
+            0,
+            imageCanvasRef.current!.width,
+            imageCanvasRef.current!.height
+          );
         }
       };
-      reader.readAsDataURL(file);
     }
-  };
+  }, [router.isReady, router.query]);
 
   const startDrawing = (x: number, y: number) => {
     if (drawingCtxRef.current) {
@@ -89,7 +90,7 @@ export default function DrawPage() {
       const y = touch.clientY - rect.top;
       draw(x, y);
     }
-    event.preventDefault(); // 터치 스크롤 방지
+    event.preventDefault();
   };
 
   const initializeCanvas = (
@@ -144,12 +145,6 @@ export default function DrawPage() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <h2 className="text-2xl font-bold mb-4">이미지 위에 그리기</h2>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        className="mb-4"
-      />
       <div
         style={{ position: "relative", width: 400, height: 400 }}
         className="border border-gray-300"
