@@ -43,7 +43,7 @@ export default function SignupForm() {
 
   return (<Suspense>
     <div className="w-full max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold text-center mb-6">가짜 회원가입</h2>
+      <h2 className="text-2xl font-bold text-center mb-6">회원가입</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* 닉네임 입력 */}
         <div>
