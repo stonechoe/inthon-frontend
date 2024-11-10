@@ -2,7 +2,7 @@
 
 import { Coord } from "@/app/types/common";
 import MyMap from "@/components/MyMap";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RequireGeo from "@/components/RequireGeo";
 import { authInstance } from "@/util/instance";
 import { useSearchParams } from "next/navigation";
@@ -41,8 +41,7 @@ export default function SubMenuPage() {
   const [percent, setPercent] = useState<number | undefined>(undefined);
   const [runId, setRunId] = useState<string | undefined>(undefined);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [watchCallback, setWatchCallback] = useState<NodeJS.Timeout | undefined>(undefined);
+  // const [watchCallback, setWatchCallback] = useState<NodeJS.Timeout | undefined>(undefined);
 
   const sp = useSearchParams();
   const pathId = sp.get('path');
@@ -54,7 +53,7 @@ export default function SubMenuPage() {
     });
   }, []);
 
-  const appendCoords = function appendCoords(pos: GeolocationPosition) {
+  const appendCoords = useCallback(function appendCoords(pos: GeolocationPosition) {
     if (!runId) return;
     setCoords((prev) => {
       const newCoords = [...prev];
@@ -63,18 +62,15 @@ export default function SubMenuPage() {
       newCoords.push({ lat: latitude, lng: longitude });
       authInstance.post(`/running/${runId}/running-states`, { latitude, longitude, time: (new Date()).toISOString() }).then((res) => {
         // ignore target coords for now?
-        console.log('GOT: ',  JSON.stringify(res.data));
+        console.log('GOT: ', JSON.stringify(res.data));
         setPercent(res.data.percent);
       });
       return newCoords;
     });
-  };
+  }, []);
 
   useEffect(() => {
-    const num = setTimeout(() => {
-      navigator.geolocation.getCurrentPosition(appendCoords)
-    }, 1000);
-    setWatchCallback(num);
+    navigator.geolocation.watchPosition(appendCoords)
   }, [appendCoords]);
 
   return (<RequireGeo setCoord={setCoord}>
