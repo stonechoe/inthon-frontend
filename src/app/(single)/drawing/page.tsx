@@ -2,7 +2,7 @@
 
 import { Coord } from "@/app/types/common";
 import MyMap from "@/components/MyMap";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import RequireGeo from "@/components/RequireGeo";
 import { authInstance } from "@/util/instance";
 import { useSearchParams } from "next/navigation";
