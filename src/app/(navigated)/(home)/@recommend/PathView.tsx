@@ -1,14 +1,10 @@
 'use client';
 
-import { Coord } from "@/app/types/common";
+import { LongCoord } from "@/app/types/common";
 import { authInstance } from "@/util/instance";
 import { useQuery } from "@tanstack/react-query";
 import MapCard from "@/components/MapCard";
 
-interface LongCoord {
-  latitude: number;
-  longitude: number;
-}
 
 interface PathDetailResponse {
   coordinates: LongCoord[];
@@ -18,9 +14,10 @@ interface Props {
   identifier: string;
   title: string;
   description: string;
+  mapelementidprefix?: string;
 }
 
-export default function MapView({ identifier, title, description }: Props) { 
+export default function PathView({ identifier, title, description, mapelementidprefix = '' }: Props) { 
   const { data, isLoading } = useQuery<PathDetailResponse>({
     queryKey: ["path", identifier],
     queryFn: async () => {
@@ -37,6 +34,6 @@ export default function MapView({ identifier, title, description }: Props) {
   }
 
   return (
-    <MapCard title={title} description={description} pathsets={[{ color: '#000000', coords: data?.coordinates.map((c) => ({lat: c.latitude, lng: c.longitude}))}]} />
+    <MapCard mapelementid={mapelementidprefix + identifier} title={title} description={description} pathsets={[{ color: '#000000', coords: data?.coordinates.map((c) => ({lat: c.latitude, lng: c.longitude}))}]} />
   );
 }

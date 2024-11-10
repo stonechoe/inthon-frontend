@@ -1,54 +1,41 @@
 // HomePage.tsx
 "use client";
-import Card from "@/components/Card";
+
+import PathView from "../@recommend/PathView";
 import { useQuery } from "@tanstack/react-query";
+import { authInstance } from "@/util/instance";
+import { PathData } from "../@recommend/page";
 
-async function getTodos() {
-  return [{
-    id: 1,
-    imagePath: '/dino.png',
-    title: '공룡',
-    description: 'ㅇㅁㄴㅇㄹ',
-    likes: 10,
-  }]
-}
-
-interface CardProps {
-  id: number;
-  imagePath: string;
-  title: string;
-  description: string;
-  likes: number;
+async function fetchAllPaths() {
+  return await authInstance.get("/paths").then((res) => res.data) as PathData[];
 }
 
 export default function HomePage() {
-  const { data } = useQuery<CardProps[]>({
-    queryKey: ["todos"],
-    queryFn: getTodos,
+  const { data } = useQuery({
+    queryKey: ["allpath"],
+    queryFn: fetchAllPaths
   });
 
-  // 클릭 시 abstract 페이지로 이동
-  const handleGalleryClick = (card: CardProps) => {
-    const { id, imagePath, title, likes, description } = card;
+  const first = data?.at(0);
 
-    window.location.href = `/abstract?id=${id}&imageUrl=${imagePath}&title=${encodeURIComponent(
-      title
-    )}&likes=${likes}&description=${encodeURIComponent(description)}`;
-  };
+  if (!first) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="w-full px-8 mt-8">
       <h1 className="text-3xl font-extrabold">오늘의 추천 코스</h1>
       <div className="px-16 pb-8 pt-8 flex items-center justify-center">
-        {data?.map((card, idx) => (
-          <Card
-            key={idx}
-            imagePath={card.imagePath || '/dino.png'}
-            title={card.title}
-            description={card.description}
-            onClick={() => handleGalleryClick(card)}
+        {data?.at(0) && (
+          <PathView
+            key={first.identifier}
+            identifier={first.identifier}
+            mapelementidprefix="home"
+            // imagePath={card.imagePath || '/dino.png'}
+            title={first.title}
+            description={first.description}
           />
-        ))}
+        )}
       </div>
     </div>
   );

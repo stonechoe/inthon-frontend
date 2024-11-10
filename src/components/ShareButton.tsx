@@ -77,7 +77,7 @@ export default function ShareButton({ isShare, linkUrl, title, description, imag
         e.stopPropagation(); // 카드 전체의 클릭 이벤트와 분리
         handleButtonClick();
       }}
-      className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full font-semibold hover:bg-blue-600 transition flex flex-row items-center justify-center gap-4"
+      className="flex flex-row items-center justify-center"
     >
       <div className="inline">
       <ShareIcon />

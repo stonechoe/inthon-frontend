@@ -8,11 +8,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { authInstance } from "@/util/instance";
 import { useQuery } from "@tanstack/react-query";
-import MapView from "./MapView";
+import PathView from "./PathView";
 
-interface CardProps {
+export interface PathData {
   identifier: string;
   title: string;
+  description: string;
   name: string;
   total_distance: number;
   estimated_required_minute: number;
@@ -22,7 +23,7 @@ interface CardProps {
 }
 
 async function fetchAllPaths() {
-  return await authInstance.get("/paths").then((res) => res.data) as CardProps[];
+  return await authInstance.get("/paths").then((res) => res.data) as PathData[];
 }
 
 // const handleGalleryClick = (card: CardProps) => {
@@ -84,7 +85,7 @@ export default function Overviews() {
         pagination={true}
         modules={[Virtual, Navigation]}
         virtual={{ enabled: true }}
-        slidesPerView={1.4}
+        style={{ width: "100%" }}
         className="mySwiper"
         onSlideChange={(sw) => setTab(sw.activeIndex)}
       >
@@ -94,7 +95,7 @@ export default function Overviews() {
               className="px-8 pb-8 pt-8 flex items-center justify-center cursor-pointer"
               onClick={() => handleCardClick()}
             >
-              <MapView
+              <PathView
                 title={slide.title}
                 description="..."
                identifier={slide.identifier}

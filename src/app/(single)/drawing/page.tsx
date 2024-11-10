@@ -6,7 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 import RequireGeo from "@/components/RequireGeo";
 import { authInstance } from "@/util/instance";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface CreateRunRequest {
@@ -76,7 +75,7 @@ export default function SubMenuPage() {
   return (<RequireGeo setCoord={setCoord}>
       <main className="flex-grow">
 
-       <MyMap ps={[{coords, color: '#FF0000'}]} />
+       <MyMap mapelementid="DRAW_ID" ps={[{coords, color: '#FF0000'}]} />
 
       </main>
       <div className="w-full bg-white">

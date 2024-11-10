@@ -6,7 +6,7 @@ import type { SwiperRef } from "swiper/react";
 import { Virtual, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import Card from "@/components/Card";
+// import Card from "@/components/Card";
 
 const slideData = [
   {

@@ -8,11 +8,12 @@ import MyPageIcon from 'public/icons/mypage.svg'
 import { computeBounds, computeCenterOfGravity } from '@/util/util';
 
 interface Props {
+  mapelementid: string;
   ps: PathSet[]
   useCenter?: boolean;
  };
 
-export default function MyMap({ ps, useCenter } : Props) {
+export default function MyMap({ ps, useCenter, mapelementid } : Props) {
   const map = useMap();
   const maps = useMapsLibrary("maps");
 
@@ -42,7 +43,6 @@ export default function MyMap({ ps, useCenter } : Props) {
   const lastCoord = totalCoords.length > 0 ? totalCoords[totalCoords.length - 1] : undefined;
   
   let bounds = undefined
-  let zoom = undefined;
   let center : undefined | Coord = undefined;
   if (useCenter){
     bounds = computeBounds(totalCoords);
@@ -50,24 +50,21 @@ export default function MyMap({ ps, useCenter } : Props) {
 
     if (isNaN(bounds.south) || isNaN(bounds.west) || isNaN(bounds.north) || isNaN(bounds.east) || isNaN(center.lat) || isNaN(center.lng)) { 
       bounds = undefined;
-      zoom = 20;
       center = undefined;
     }
 
   } else {
     center = lastCoord;
-    zoom = 20;
   }
 
   
 
   return (<div className='h-full w-full relative'>
     <Map
-      // defaultZoom={20}
       defaultBounds={bounds}
       defaultCenter={center}
       disableDefaultUI
-      mapId="DEMO_MAP_ID"
+      mapId={mapelementid}
       //  Map ID is required for advanced markers. 
     >
       {firstCoord && <AdvancedMarker position={firstCoord}>
