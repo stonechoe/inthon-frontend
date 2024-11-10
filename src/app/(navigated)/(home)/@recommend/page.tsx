@@ -6,12 +6,13 @@ import type { SwiperRef } from "swiper/react";
 import { Virtual, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import Card from "@/components/Card";
 import { authInstance } from "@/util/instance";
 import { useQuery } from "@tanstack/react-query";
+import MapView from "./MapView";
 
 interface CardProps {
   identifier: string;
+  title: string;
   name: string;
   total_distance: number;
   estimated_required_minute: number;
@@ -93,11 +94,10 @@ export default function Overviews() {
               className="px-8 pb-8 pt-8 flex items-center justify-center cursor-pointer"
               onClick={() => handleCardClick()}
             >
-              <Card
-                imagePath='/images/adidas.jpeg'
-                title='title'
-                description='description'
-                // onClick={() => handleGalleryClick(slide)}
+              <MapView
+                title={slide.title}
+                description="..."
+               identifier={slide.identifier}
               />
             </div>
           </SwiperSlide>

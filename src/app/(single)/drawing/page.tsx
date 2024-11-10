@@ -73,7 +73,7 @@ export default function SubMenuPage() {
     setWatchCallback(num);
   }, [appendCoords]);
 
-  return (<Suspense><RequireGeo setCoord={setCoord}>
+  return (<RequireGeo setCoord={setCoord}>
       <main className="flex-grow">
 
        <MyMap ps={[{coords, color: '#FF0000'}]} />
@@ -91,5 +91,5 @@ export default function SubMenuPage() {
           <button className="p-2 bg-primary-main text-white rounded-xl w-full">그만하기</button>
         </div>
       </div>
-    </RequireGeo></Suspense> );
+    </RequireGeo> );
 }

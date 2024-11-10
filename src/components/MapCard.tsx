@@ -1,26 +1,26 @@
 "use client";
 import React from "react";
 import MyMap from "./MyMap";
-import type { CardProps } from "@/app/api/paths/route";
+import { CardProps } from "./Card";
 import type { PathSet } from "@/app/types/common";
 
 import ShareButton from "./ShareButton";
 
-interface EnhancedCardProps extends CardProps {
+interface MapCardProps extends CardProps {
   pathsets: PathSet[];
   isShare?: boolean;
   linkUrl?: string;
   onClick?: () => void;
 }
 
-export default function Card({
+export default function MapCard({
   pathsets,
   title,
   description,
   isShare = true,
   linkUrl = "/",
   onClick,
-}: EnhancedCardProps) {
+}: MapCardProps) {
 
 
   return (
@@ -29,7 +29,7 @@ export default function Card({
       className="rounded-lg border border-primary-200 w-full max-w-xs cursor-pointer"
     >
       <div className="w-full h-64 bg-gray-200 rounded-t-lg overflow-hidden relative">
-        <MyMap ps={pathsets} />
+        {pathsets && <MyMap useCenter ps={pathsets} />}
       </div>
       <div className="p-4">
         <div className="font-bold">{title}</div>
@@ -37,7 +37,6 @@ export default function Card({
 
         {/* 공유하기 또는 링크 이동 버튼 */}
         <ShareButton linkUrl={linkUrl} isShare={isShare} title={title} description={description} imagePath="/dino.png" />
-        
       </div>
     </div>
   );

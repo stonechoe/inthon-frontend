@@ -3,10 +3,16 @@
 import React from 'react';
 import { AdvancedMarker, Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 
-import { PathSet } from '@/app/types/common';
+import { Coord, PathSet } from '@/app/types/common';
 import MyPageIcon from 'public/icons/mypage.svg'
+import { computeBounds, computeCenterOfGravity } from '@/util/util';
 
-export default function MyMap({ ps } : { ps : PathSet[] }) {
+interface Props {
+  ps: PathSet[]
+  useCenter?: boolean;
+ };
+
+export default function MyMap({ ps, useCenter } : Props) {
   const map = useMap();
   const maps = useMapsLibrary("maps");
 
@@ -16,44 +22,68 @@ export default function MyMap({ ps } : { ps : PathSet[] }) {
   
   const totalCoords = ps.flatMap(p => p.coords);
   
+
+
   for (const p of ps) {
+      
+      const flightPath = new maps.Polyline({
+        path: p.coords,
+        geodesic: true,
+        strokeColor: p.color,
+        strokeOpacity: 1.0,
+        strokeWeight: 10,
+      });
 
-    const flightPath = new maps.Polyline({
-      path: p.coords,
-      geodesic: true,
-      strokeColor: p.color,
-      strokeOpacity: 1.0,
-      strokeWeight: 1,
-    });
+      flightPath.setMap(map);
+  
+  }
+  
+  const firstCoord = totalCoords.length > 0 ? totalCoords[0] : undefined;
+  const lastCoord = totalCoords.length > 0 ? totalCoords[totalCoords.length - 1] : undefined;
+  
+  let bounds = undefined
+  let zoom = undefined;
+  let center : undefined | Coord = undefined;
+  if (useCenter){
+    bounds = computeBounds(totalCoords);
+    center = computeCenterOfGravity(totalCoords);
 
-    flightPath.setMap(map);
+    if (isNaN(bounds.south) || isNaN(bounds.west) || isNaN(bounds.north) || isNaN(bounds.east) || isNaN(center.lat) || isNaN(center.lng)) { 
+      bounds = undefined;
+      zoom = 20;
+      center = undefined;
+    }
+
+  } else {
+    center = lastCoord;
+    zoom = 20;
   }
 
-  const firstCoord = totalCoords[0];
-  const lastCoord = totalCoords[totalCoords.length - 1];
+  
 
   return (<div className='h-full w-full relative'>
     <Map
-      defaultZoom={20}
-      defaultCenter={lastCoord}
+      // defaultZoom={20}
+      defaultBounds={bounds}
+      defaultCenter={center}
       disableDefaultUI
       mapId="DEMO_MAP_ID"
       //  Map ID is required for advanced markers. 
     >
-      <AdvancedMarker position={firstCoord}>
+      {firstCoord && <AdvancedMarker position={firstCoord}>
       <div className='bg-white rounded-xl aspect-square text-black p-2 flex flex-col shadow-xl items-center border-black'>
           <h1>
             <div className='text-[24px]'>🦶</div>
             <span>시작</span>
           </h1>
         </div>
-      </AdvancedMarker>
-      <AdvancedMarker position={lastCoord}>
+      </AdvancedMarker>}
+      {lastCoord && <AdvancedMarker position={lastCoord}>
         <div className='bg-white rounded-xl aspect-square text-black p-2 flex flex-col shadow-xl items-center border-black'>
           <MyPageIcon />
-          <span>내 위치</span>
+          <span>마지막</span>
         </div>
-      </AdvancedMarker>
+      </AdvancedMarker>}
     </Map>
     </div>
   );

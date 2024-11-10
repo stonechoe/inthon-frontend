@@ -1,11 +1,15 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import type { CardProps } from "@/app/api/paths/route";
 
 import ShareButton from "./ShareButton";
+export interface CardProps {
+  title: string;
+  description: string;
+}
 
-interface EnhancedCardProps extends CardProps {
+export interface EnhancedCardProps extends CardProps {
+  imagePath: string;
   isShare?: boolean;
   linkUrl?: string;
   onClick?: () => void;
