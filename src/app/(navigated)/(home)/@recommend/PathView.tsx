@@ -11,14 +11,13 @@ interface PathDetailResponse {
 }
 
 interface Props {
-  useLink?: boolean;
   identifier: string;
   title: string;
   description: string;
   mapelementidprefix?: string;
 }
 
-export default function PathView({ useLink, identifier, title, description, mapelementidprefix = '' }: Props) { 
+export default function PathView({ identifier, title, description, mapelementidprefix = '' }: Props) { 
   const { data, isLoading } = useQuery<PathDetailResponse>({
     queryKey: ["path", identifier],
     queryFn: async () => {

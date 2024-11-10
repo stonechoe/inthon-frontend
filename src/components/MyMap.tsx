@@ -1,11 +1,11 @@
 "use client";
 
-import React, { use } from 'react';
+import React from 'react';
 import { AdvancedMarker, Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 
 import { Coord, PathSet } from '@/app/types/common';
 import MyPageIcon from 'public/icons/mypage.svg'
-import { computeBounds, computeCenterOfGravity } from '@/util/util';
+import { computeBounds } from '@/util/util';
 
 interface Props {
   mapelementid: string;
@@ -52,7 +52,12 @@ export default function MyMap({ ps, useCenter, mapelementid } : Props) {
     east: number
     north: number
     south: number
-  }): any {
+  }): {
+    west: number
+    east: number
+    north: number
+    south: number
+  } | undefined {
     const isundef = isNaN(coord.west) ||
     isNaN(coord.east) ||
     isNaN(coord.north) ||
