@@ -32,7 +32,8 @@ function Overviews({ drawings }: OverviewsProps) {
           <div className="flex justify-center items-center">
             <div className="relative w-48 h-48 justify-center items-center">
               <Image
-                src={drawing.imageUrl}
+                // src={drawing.imageUrl}
+                src='/dino.png'
                 alt="Gallery Drawing"
                 layout="fill"
                 objectFit="cover"

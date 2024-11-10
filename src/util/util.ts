@@ -65,3 +65,19 @@ export function meterDistance(c1: Coord, c2: Coord) {
 
   return R * c;
 }
+
+export function computeBounds(points: LangLat[]) {
+  
+  const minLat = Math.min(...points.map(p => p.lat));
+  const maxLat = Math.max(...points.map(p => p.lat));
+  const minLng = Math.min(...points.map(p => p.lng));
+  const maxLng = Math.max(...points.map(p => p.lng));
+  return {
+    // ne: { lat: maxLat, lng: maxLng },
+    // sw: { lat: minLat, lng: minLng },
+    east: maxLng,
+    south: minLat,
+    north: maxLat,
+    west: minLng
+  };
+}

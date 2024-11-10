@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
+import Link from "next/link";
+
 export default function MyPage() {
   const userInfo = {
     name: "홍길동",
@@ -27,7 +29,6 @@ export default function MyPage() {
       isHidden: false,
     },
   ]);
-
   const handleAccept = (id: number) => {
     setInvitations(
       invitations.map((invitation) =>
@@ -46,6 +47,7 @@ export default function MyPage() {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <Link href="/logout">로그아웃</Link>
       <h1 className="text-3xl font-bold mb-4">마이페이지</h1>
 
       <div className="mb-6">

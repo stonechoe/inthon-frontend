@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function AbstractPage() {
   const searchParams = useSearchParams();
   // const id = searchParams.get("id");
-  const imageUrl = searchParams.get("imageUrl");
+  const imageUrl = searchParams.get("imageUrl") || "/dino.png";
   const title = searchParams.get("title");
   // const likes = searchParams.get("likes");
   const description = searchParams.get("description");

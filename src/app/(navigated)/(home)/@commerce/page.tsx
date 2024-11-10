@@ -101,13 +101,13 @@ export default function Overviews() {
               className="px-16 pb-8 pt-8 flex items-center justify-center cursor-pointer"
               onClick={() => handleCardClick()}
             >
-              <Card
+              {/* <Card
                 isShare={false}
                 imagePath={slide.imageUrl}
                 title={slide.title}
                 description={slide.description}
                 linkUrl={slide.linkUrl}
-              />
+              /> */}
             </div>
           </SwiperSlide>
         ))}

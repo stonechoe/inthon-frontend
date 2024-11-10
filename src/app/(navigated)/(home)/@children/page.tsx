@@ -4,11 +4,13 @@ import Card from "@/components/Card";
 import { useQuery } from "@tanstack/react-query";
 
 async function getTodos() {
-  const response = await fetch("/api/paths");
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  return response.json();
+  return [{
+    id: 1,
+    imagePath: '/dino.png',
+    title: '공룡',
+    description: 'ㅇㅁㄴㅇㄹ',
+    likes: 10,
+  }]
 }
 
 interface CardProps {
@@ -41,7 +43,7 @@ export default function HomePage() {
         {data?.map((card, idx) => (
           <Card
             key={idx}
-            imagePath={card.imagePath}
+            imagePath={card.imagePath || '/dino.png'}
             title={card.title}
             description={card.description}
             onClick={() => handleGalleryClick(card)}
