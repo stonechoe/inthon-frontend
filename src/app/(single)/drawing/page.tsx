@@ -22,10 +22,11 @@ interface EditRunRequest {
   run_identifier :string;
   title :string;
   description :string;
+  path_identifier?: string;
   running_status :string;
   user_identifier :string;
   crew_identifer :string;
-  running_user_identifiers :string;
+  running_user_identifiers: string;
 }
 
 export default function SubMenuPage() {

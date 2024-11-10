@@ -35,6 +35,6 @@ export default function PathView({ useLink, identifier, title, description, mape
   }
 
   return (
-    <MapCard useLink={useLink ? `/path/${identifier}` : undefined} mapelementid={mapelementidprefix + identifier} title={title} description={description} pathsets={[{ color: '#000000', coords: data?.coordinates.map((c) => ({lat: c.latitude, lng: c.longitude}))}]} />
+    <MapCard useLink={useLink ? `${identifier}` : undefined} mapelementid={mapelementidprefix + identifier} title={title} description={description} pathsets={[{ color: '#000000', coords: data?.coordinates.map((c) => ({lat: c.latitude, lng: c.longitude}))}]} />
   );
 }

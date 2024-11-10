@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { authInstance } from "@/util/instance";
 import { LongCoord } from "@/app/types/common";
 import MyMap from "@/components/MyMap";
+import Link from "next/link";
 
 export interface PathData {
   identifier: string;
@@ -59,12 +60,13 @@ export default function PathPage() {
         <div className="text-3xl font-semibold">{thatData.title}</div>
         <div className="">{thatData.description}</div>
 
-        <button
+        <Link href={`/drawing?path=${params.id}`}>
+        <div
           className="mt-6 px-6 py-3 bg-blue-500 text-white font-bold rounded-full shadow-md hover:bg-blue-600 transition-transform transform hover:scale-105"
-          onClick={() => alert("달리기를 시작합니다!")}
         >
           달리기 시작
-        </button>
+          </div>
+        </Link>
       </div>
     </div>
   );
