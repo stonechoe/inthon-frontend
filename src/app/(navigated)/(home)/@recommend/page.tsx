@@ -95,11 +95,13 @@ export default function Overviews() {
               className="px-8 pb-8 pt-8 flex items-center justify-center cursor-pointer"
               onClick={() => handleCardClick()}
             >
-              <PathView
+              
+                <PathView
+                  
                 title={slide.title}
-                description="..."
-               identifier={slide.identifier}
-              />
+                description={slide.description}
+                identifier={slide.identifier}
+                />
             </div>
           </SwiperSlide>
         ))}

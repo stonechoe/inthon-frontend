@@ -40,12 +40,12 @@ authInstance.interceptors.response.use(
       //   ...config,
       //   headers: { Authorization: `Bearer ${newTokens.accessToken}` },
       // });
-      return Promise.reject(error);
+      // return Promise.reject(error);
       // return await Promise.resolve(response);
     // } catch () {
       // const error = e as AxiosError;
       // if (error.status === 401) {
-      //   window.location.href = '/login';
+        window.location.href = '/login';
       // }
       // console.error(error);
     // }

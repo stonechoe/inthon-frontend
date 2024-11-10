@@ -15,7 +15,7 @@ interface LoginResponse{
 }
 
 const K_REST_API_KEY = process.env.NEXT_PUBLIC_K_REST_API_KEY || '';
-const K_REDIRECT_URI = `http://localhost:3000/login`;
+const K_REDIRECT_URI = `${process.env.NEXT_PUBLIC_SELF}/login`;
 
 /* KAKO auth로 로그인을 시도 -> 없는 경우 취소 */
 export default function TryLogin({ code }: { code: string }) {

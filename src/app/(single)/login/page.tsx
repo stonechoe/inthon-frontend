@@ -6,7 +6,7 @@ import TryLogin from "./aux/api";
 import { useSearchParams } from "next/navigation";
 
 const K_REST_API_KEY = process.env.NEXT_PUBLIC_K_REST_API_KEY;
-const K_REDIRECT_URI = `http://localhost:3000/login`;
+const K_REDIRECT_URI = `${process.env.NEXT_PUBLIC_SELF}/login`;
 const K_REDIRECT_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${K_REST_API_KEY}&redirect_uri=${K_REDIRECT_URI}&response_type=code`;
 
 export default function Loginpage() {

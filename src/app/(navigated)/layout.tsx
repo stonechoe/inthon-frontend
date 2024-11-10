@@ -5,6 +5,7 @@ import Nav from "@/components/Nav";
 import Link from "next/link";
 import MyPageIcon from "public/icons/mypage.svg";
 import { useIslogin } from "@/util/handleToken";
+import RequireLogin from "@/components/RequireLogin";
 
 export default function ForceMobileLayout({ children }: PropsWithChildren) {
   const isLogin = useIslogin();
@@ -29,7 +30,7 @@ export default function ForceMobileLayout({ children }: PropsWithChildren) {
           </Link>
         )}
       </header>
-      <main className="flex-grow">{children}</main>
+      <RequireLogin><main className="flex-grow">{children}</main></RequireLogin>
       <Nav />
     </div>
   );

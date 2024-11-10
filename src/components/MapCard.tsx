@@ -8,6 +8,7 @@ import Link from "next/link";
 import ShareButton from "./ShareButton";
 
 interface MapCardProps extends CardProps {
+  useLink?: string;
   mapelementid: string;
   pathsets: PathSet[];
   isShare?: boolean;
@@ -16,6 +17,7 @@ interface MapCardProps extends CardProps {
 }
 
 export default function MapCard({
+  useLink,
   mapelementid,
   pathsets,
   title,
@@ -35,10 +37,14 @@ export default function MapCard({
         {pathsets && <MyMap mapelementid={mapelementid} useCenter ps={pathsets} />}
       </div>
       <div className="p-4 flex flex-col gap-1">
-        <div className="font-bold">{title}</div>
-        <div className="text-sm text-gray-500 mb-4">{description}</div>
-
-
+        {
+          useLink ? <Link href={useLink}>
+            <div className="font-bold">{title}</div>
+            <div className="text-sm text-gray-500 mb-4">{description}</div>
+          </Link>
+           : <><div className="font-bold">{title}</div><div className="text-sm text-gray-500 mb-4">{description}</div></>
+        }
+        
 
           <Link href={`/drawing?=${''}`}>
             <div className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full font-semibold hover:bg-blue-600 transition flex flex-row items-center justify-center gap-4">달리기</div>

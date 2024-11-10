@@ -1,38 +1,64 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import { authInstance } from "@/util/instance";
+import { LongCoord } from "@/app/types/common";
+import MyMap from "@/components/MyMap";
 
-export default function AbstractPage() {
-  const searchParams = useSearchParams();
-  // const id = searchParams.get("id");
-  const imageUrl = searchParams.get("imageUrl") || "/dino.png";
-  const title = searchParams.get("title");
-  // const likes = searchParams.get("likes");
-  const description = searchParams.get("description");
+export interface PathData {
+  identifier: string;
+  title: string;
+  description: string;
+  name: string;
+  total_distance: number;
+  estimated_required_minute: number;
+  creator_identifier: string;
+  created_date: string;
+  last_modified_date: string;
+}
+
+async function fetchAllPaths() {
+  return await authInstance.get("/paths").then((res) => res.data) as PathData[];
+}
+
+interface Response{
+  path_identifier: string;
+  coordinates: LongCoord[];
+}
+
+export default function PathPage() {
+  
+  const params = useParams<{ id: string }>();
+  const { data: allData } = useQuery({
+    queryKey: ["allpath"],
+    queryFn: fetchAllPaths
+  });
+
+  const { data } = useQuery({
+    queryKey: ["path", params.id],
+    queryFn: async () => {
+      const response = await authInstance.get<Response>(`/paths/${params.id}`);
+      return response.data;
+    },
+  });
+
+  const thatData = allData?.find((path) => path.identifier === params.id); 
+
+  if (!data || !allData || !thatData) {
+    return <div>{params.id} 로딩 중...</div>;
+  }
+
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold text-center mb-6">{title}</h1>
-
-      {/* 경로 이미지 */}
-      <div className="relative w-[300px] h-[300px] mb-6 flex justify-center items-center bg-gray-100 rounded-lg overflow-hidden mx-auto">
-        {imageUrl && (
-          <Image
-            src={imageUrl as string}
-            alt={title as string}
-            width={300}
-            height={300}
-            objectFit="cover"
-            className="rounded-lg"
-          />
-        )}
+    <div className="w-full max-w-3xl mx-auto p-8 rounded-lg">
+      <div className="w-full h-96 bg-gray-200 rounded-t-lg overflow-hidden relative">
+        <MyMap mapelementid={params.id} useCenter ps={[{color: '#000000', coords: data.coordinates.map((v) => ({lat: v.latitude, lng: v.longitude}))}]} />
       </div>
 
-      {/* 경로 정보 */}
-      <div className="flex flex-col items-center space-y-4">
-        <div className="text-lg font-semibold">{description}</div>
+      <div className="flex flex-col items-center py-16 gap-4">
+        <div className="text-3xl font-semibold">{thatData.title}</div>
+        <div className="">{thatData.description}</div>
 
-        {/* 달리기 시작 버튼 */}
         <button
           className="mt-6 px-6 py-3 bg-blue-500 text-white font-bold rounded-full shadow-md hover:bg-blue-600 transition-transform transform hover:scale-105"
           onClick={() => alert("달리기를 시작합니다!")}
