@@ -54,7 +54,7 @@ export default function SubMenuPage() {
     });
   }, []);
 
-  const appendCoords = useCallback(function appendCoords(pos: GeolocationPosition) {
+  const appendCoords = function appendCoords(pos: GeolocationPosition) {
     if (!runId) return;
     setCoords((prev) => {
       const newCoords = [...prev];
@@ -68,7 +68,7 @@ export default function SubMenuPage() {
       });
       return newCoords;
     });
-  }, [runId]);
+  };
 
   useEffect(() => {
     const num = setTimeout(() => {
