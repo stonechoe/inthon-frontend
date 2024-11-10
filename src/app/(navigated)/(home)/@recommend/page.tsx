@@ -98,6 +98,7 @@ export default function Overviews() {
               
                 <PathView
                   
+                useLink
                 title={slide.title}
                 description={slide.description}
                 identifier={slide.identifier}

@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { use } from 'react';
 import { AdvancedMarker, Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 
 import { Coord, PathSet } from '@/app/types/common';
@@ -42,27 +42,28 @@ export default function MyMap({ ps, useCenter, mapelementid } : Props) {
   const firstCoord = totalCoords.length > 0 ? totalCoords[0] : undefined;
   const lastCoord = totalCoords.length > 0 ? totalCoords[totalCoords.length - 1] : undefined;
   
-  let bounds = undefined
-  let center : undefined | Coord = undefined;
-  if (useCenter){
-    bounds = computeBounds(totalCoords);
-    center = computeCenterOfGravity(totalCoords);
-
-    if (isNaN(bounds.south) || isNaN(bounds.west) || isNaN(bounds.north) || isNaN(bounds.east) || isNaN(center.lat) || isNaN(center.lng)) { 
-      bounds = undefined;
-      center = undefined;
-    }
-
-  } else {
-    center = lastCoord;
+  function undefinedIfContainsNaN(coord: Coord | undefined): Coord | undefined {
+    if (coord === undefined) return undefined;
+    return ((isNaN(coord.lat) || isNaN(coord.lng)) ? undefined : coord) || undefined;
   }
 
-  
+  function undefinedIfContainsNaNDirection(coord: {
+    west: number
+    east: number
+    north: number
+    south: number
+  }): any {
+    const isundef = isNaN(coord.west) ||
+    isNaN(coord.east) ||
+    isNaN(coord.north) ||
+    isNaN(coord.south);
+    return isundef ? undefined : coord;
+  }
 
   return (<div className='h-full w-full relative'>
     <Map
-      defaultBounds={bounds}
-      defaultCenter={center}
+      defaultBounds={useCenter ?  undefined: undefinedIfContainsNaNDirection(computeBounds(totalCoords)) }
+      defaultCenter={useCenter ? undefinedIfContainsNaN(lastCoord) : undefined}
       disableDefaultUI
       mapId={mapelementid}
       //  Map ID is required for advanced markers. 

@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import RequireGeo from "@/components/RequireGeo";
 import { authInstance } from "@/util/instance";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface CreateRunRequest {
@@ -31,6 +32,8 @@ interface EditRunRequest {
 
 export default function SubMenuPage() {
 
+  const router = useRouter();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [coord, setCoord] = useState<Coord | undefined>(undefined);
   const [coords, setCoords] = useState<Coord[]>([]);
@@ -46,7 +49,7 @@ export default function SubMenuPage() {
 
   useEffect(() => {
     authInstance.post('/running', { title : 'asdf', running_user_identifiers: [], path_identifier : pathId}).then((res) => {
-      alert(JSON.stringify(res.data));
+      // alert(JSON.stringify(res.data));
       setRunId(res.data.identifier);
     });
   }, []);
@@ -60,6 +63,7 @@ export default function SubMenuPage() {
       newCoords.push({ lat: latitude, lng: longitude });
       authInstance.post(`/running/${runId}/running-states`, { latitude, longitude, time: (new Date()).toISOString() }).then((res) => {
         // ignore target coords for now?
+        console.log('GOT: ',  JSON.stringify(res.data));
         setPercent(res.data.percent);
       });
       return newCoords;
@@ -80,15 +84,18 @@ export default function SubMenuPage() {
 
       </main>
       <div className="w-full bg-white">
-        <div className="p-4">
+        {percent !== undefined && <div className="p-4">
           <h1 className="text-4xl font-bold">목표 달성 {percent}%</h1>
-          <div className="p-2 border-b border-gray-200">목적지 설정</div>
-          <div className="p-2 border-b border-gray-200">목적지 설정</div>
-          <div className="p-2 border-b border-gray-200">목적지 설정</div>
-          <div className="p-2 border-b border-gray-200">목적지 설정</div>
-        </div>
+        </div>}
         <div className="p-4">
-          <button className="p-2 bg-primary-main text-white rounded-xl w-full">그만하기</button>
+        <button className="p-2 bg-primary-main text-white rounded-xl w-full" onClick={
+          () => {
+            authInstance.put(`/running/${runId}`, { run_identifier: runId, running_status: 'COMPLETED' }).then(() => { 
+              alert('완료되었습니다.');
+              router.push('/');
+             });
+          }
+          }>그만하기</button>
         </div>
       </div>
     </RequireGeo> );
