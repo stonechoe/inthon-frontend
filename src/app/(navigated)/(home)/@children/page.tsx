@@ -31,7 +31,6 @@ export default function HomePage() {
             key={first.identifier}
             identifier={first.identifier}
             mapelementidprefix="home"
-            // imagePath={card.imagePath || '/dino.png'}
             title={first.title}
             description={first.description}
           />
