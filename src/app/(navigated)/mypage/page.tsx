@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 // pages/mypage.js
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 export default function MyPage() {
@@ -32,7 +32,7 @@ export default function MyPage() {
   ]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleAccept = (id : number) => {
+  const handleAccept = (id: number) => {
     setInvitations(
       invitations.map((invitation) =>
         invitation.id === id ? { ...invitation, isHidden: true } : invitation
@@ -41,7 +41,7 @@ export default function MyPage() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleDecline = (id : number) => {
+  const handleDecline = (id: number) => {
     setInvitations(
       invitations.map((invitation) =>
         invitation.id === id ? { ...invitation, isHidden: true } : invitation
