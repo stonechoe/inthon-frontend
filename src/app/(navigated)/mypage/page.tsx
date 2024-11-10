@@ -1,6 +1,5 @@
-// pages/mypage.js
-import React from "react";
-import Link from "next/link";
+"use client";
+import React, { useState, useEffect } from "react";
 
 export default function MyPage() {
   const userInfo = {
@@ -29,7 +28,7 @@ export default function MyPage() {
     },
   ]);
 
-  const handleAccept = (id) => {
+  const handleAccept = (id: number) => {
     setInvitations(
       invitations.map((invitation) =>
         invitation.id === id ? { ...invitation, isHidden: true } : invitation
@@ -37,7 +36,7 @@ export default function MyPage() {
     );
   };
 
-  const handleDecline = (id) => {
+  const handleDecline = (id: number) => {
     setInvitations(
       invitations.map((invitation) =>
         invitation.id === id ? { ...invitation, isHidden: true } : invitation
@@ -48,11 +47,11 @@ export default function MyPage() {
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
       <h1 className="text-3xl font-bold mb-4">마이페이지</h1>
-      {/* 사용자 정보 */}
+
       <div className="mb-6">
         <p className="text-lg font-semibold">이름: {userInfo.name}</p>
       </div>
-      {/* 달리기 기록 */}
+
       <div>
         <h2 className="text-2xl font-bold mb-4">달리기 기록</h2>
         <ul className="space-y-3">
@@ -65,9 +64,52 @@ export default function MyPage() {
           ))}
         </ul>
       </div>
-      <Link href="/anotherpage">
-        <p className=" font-bold mb-4 mt-4 cursor-pointer">초대 수락하기</p>
-      </Link>{" "}
+
+      <div>
+        <h2 className="text-2xl font-bold mb-4 p-4">초대 요청</h2>
+        <div className="space-y-4 p-4">
+          {invitations.map(
+            (invitation) =>
+              !invitation.isHidden && (
+                <div
+                  key={invitation.id}
+                  className="w-full bg-white shadow-md rounded-lg p-6 flex flex-col md:flex-row items-center justify-between"
+                >
+                  <div className="flex items-center">
+                    <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                      {invitation.senderName[0]}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-lg">
+                        {invitation.senderName}
+                      </p>
+                      <p className="text-gray-500">
+                        크루 이름: {invitation.crewName}
+                      </p>
+                      <p className="text-gray-500">
+                        보낸 날짜: {invitation.sentDate}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex space-x-4 mt-4 md:mt-0">
+                    <button
+                      onClick={() => handleAccept(invitation.id)}
+                      className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+                    >
+                      수락
+                    </button>
+                    <button
+                      onClick={() => handleDecline(invitation.id)}
+                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                    >
+                      거절
+                    </button>
+                  </div>
+                </div>
+              )
+          )}
+        </div>
+      </div>
     </div>
   );
 }
