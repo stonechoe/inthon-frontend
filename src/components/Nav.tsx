@@ -8,7 +8,6 @@ import Canvas from "public/icons/canvas.svg";
 import Gallery from "public/icons/gallery.svg";
 import Museum from "public/icons/museum.svg";
 import Crew from "public/icons/crew.svg";
-import Plus from "public/icons/plus.svg";
 
 export default function Nav() {
   return (
@@ -19,18 +18,6 @@ export default function Nav() {
       <NavItem icon={<Gallery />} href="/gallery">
         갤러리
       </NavItem>
-      <Link href="/map">
-      <div
-        className={
-          "flex flex-col font-bold items-center bg-black rounded-full p-2 text-3xl text-white"
-        }
-        style={{ width: "52px", height: "52px", justifyContent: "center" }}
-        >
-          
-          <Plus />
-          {/* 🦶 */}
-      </div>
-    </Link>
       <NavItem icon={<Museum />} href="/museum">
         박물관
       </NavItem>
